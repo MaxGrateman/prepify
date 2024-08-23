@@ -1,34 +1,78 @@
+"use client";
+
 import '../styles/RegisterForm.css'
+import {useState} from 'react';
+import {registerUser} from '../api/register';
+
+interface FormData {
+    username: string;
+    email: string;
+    password: string;
+    passwordConfirmation: string;
+}
+
+const initialFormData: FormData = {
+    username: '',
+    email: '',
+    password: '',
+    passwordConfirmation: ''
+}
 
 function RegisterForm() {
-    
+    const [formData, setFormData] = useState<FormData>(initialFormData);
+    const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState<string | null>(null);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({ ...formData, [e.target.id]: e.target.value});
+    }
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if(formData.password !== formData.passwordConfirmation) {
+            setError("Passwords don't match");
+            return;
+        }
+
+        try {
+            const token = await registerUser({
+                username: formData.username,
+                email: formData.email,
+                password: formData.password
+            })
+
+            setSuccess('Registration successful!');
+            setError(null);
+
+            localStorage.setItem('token', token);
+        } catch (error: any) {
+            setError(error.message);
+            setSuccess(null);
+        }
+    }
 
     return(
-        <section className="vh-100">
+        <section className="vh-90">
             <div className="container py-5 h-100">
                 <div className="row justify-content-center align-items-center h-100">
                     <div className="col-12 col-lg-9 col-xl-7">
                         <div className="card shadow-2-strong card-registration" style={{borderRadius: "15px"}}>
                             <div className="card-body p-4 p-md-5">
                                 <h3 className="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
-                                <form>
+                                <form onSubmit={handleSubmit}>
 
                                     <div className="row">
                                         <div className="col-md-6 mb-4">
 
                                             <div data-mdb-input-init className="form-outline">
-                                                <input type="text" id="firstName"
-                                                       className="form-control form-control-lg"/>
-                                                <label className="form-label" htmlFor="firstName">First Name</label>
-                                            </div>
-
-                                        </div>
-                                        <div className="col-md-6 mb-4">
-
-                                            <div data-mdb-input-init className="form-outline">
-                                                <input type="text" id="lastName"
-                                                       className="form-control form-control-lg"/>
-                                                <label className="form-label" htmlFor="lastName">Last Name</label>
+                                                <input type="text"
+                                                       id="username"
+                                                       className="form-control form-control-lg"
+                                                       value={formData.username}
+                                                       onChange={handleChange}
+                                                />
+                                                <label className="form-label" htmlFor="username">Username</label>
                                             </div>
 
                                         </div>
@@ -36,81 +80,57 @@ function RegisterForm() {
 
                                     <div className="row">
                                         <div className="col-md-6 mb-4 d-flex align-items-center">
-
-                                            <div data-mdb-input-init className="form-outline datepicker w-100">
-                                                <input type="text" className="form-control form-control-lg"
-                                                       id="birthdayDate"/>
-                                                <label htmlFor="birthdayDate" className="form-label">Birthday</label>
+                                            <div data-mdb-input-init className="form-outline">
+                                                <input type="text"
+                                                       id="email"
+                                                       className="form-control form-control-lg"
+                                                       value={formData.email}
+                                                       onChange={handleChange}
+                                                />
+                                                <label className="form-label" htmlFor="email">E-mail</label>
                                             </div>
-
-                                        </div>
-                                        <div className="col-md-6 mb-4">
-
-                                            <h6 className="mb-2 pb-1">Gender: </h6>
-
-                                            <div className="form-check form-check-inline">
-                                                <input className="form-check-input" type="radio"
-                                                       name="inlineRadioOptions" id="femaleGender"
-                                                       value="option1" checked/>
-                                                <label className="form-check-label"
-                                                       htmlFor="femaleGender">Female</label>
-                                            </div>
-
-                                            <div className="form-check form-check-inline">
-                                                <input className="form-check-input" type="radio"
-                                                       name="inlineRadioOptions" id="maleGender"
-                                                       value="option2"/>
-                                                <label className="form-check-label" htmlFor="maleGender">Male</label>
-                                            </div>
-
-                                            <div className="form-check form-check-inline">
-                                                <input className="form-check-input" type="radio"
-                                                       name="inlineRadioOptions" id="otherGender"
-                                                       value="option3"/>
-                                                <label className="form-check-label" htmlFor="otherGender">Other</label>
-                                            </div>
-
                                         </div>
                                     </div>
 
                                     <div className="row">
                                         <div className="col-md-6 mb-4 pb-2">
-
                                             <div data-mdb-input-init className="form-outline">
-                                                <input type="email" id="emailAddress"
-                                                       className="form-control form-control-lg"/>
-                                                <label className="form-label" htmlFor="emailAddress">Email</label>
+                                                <input type="password"
+                                                       id="password"
+                                                       className="form-control form-control-lg"
+                                                       value={formData.password}
+                                                       onChange={handleChange}
+                                                />
+                                                <label className="form-label" htmlFor="password">Password</label>
                                             </div>
 
                                         </div>
+                                    </div>
+                                    <div className="row">
                                         <div className="col-md-6 mb-4 pb-2">
 
-                                            <div data-mdb-input-init className="form-outline">
-                                                <input type="tel" id="phoneNumber"
-                                                       className="form-control form-control-lg"/>
-                                                <label className="form-label" htmlFor="phoneNumber">Phone Number</label>
+                                            <div className="form-outline">
+                                                <input type="password"
+                                                       id="passwordConfirmation"
+                                                       className="form-control form-control-lg"
+                                                       value={formData.passwordConfirmation}
+                                                       onChange={handleChange}
+                                                />
+                                                <label className="form-label" htmlFor="passwordConfirmation">Password Confirmation</label>
                                             </div>
 
                                         </div>
                                     </div>
 
-                                    <div className="row">
-                                        <div className="col-12">
-
-                                            <select className="select form-control-lg">
-                                                <option value="1" disabled>Choose option</option>
-                                                <option value="2">Subject 1</option>
-                                                <option value="3">Subject 2</option>
-                                                <option value="4">Subject 3</option>
-                                            </select>
-                                            <label className="form-label select-label">Choose option</label>
-
-                                        </div>
-                                    </div>
+                                    {error && <p style={{ color: 'red' }}>{error}</p>}
+                                    {success && <p style={{ color: 'green' }}>{success}</p>}
 
                                     <div className="mt-4 pt-2">
-                                        <input data-mdb-ripple-init className="btn btn-primary btn-lg" type="submit"
-                                               value="Submit"/>
+                                        <input data-mdb-ripple-init
+                                               className="btn btn-primary btn-lg"
+                                               type="submit"
+                                               value="Submit"
+                                        />
                                     </div>
 
                                 </form>
