@@ -5,14 +5,14 @@ import {useState} from 'react';
 import {registerUser} from '../api/register';
 
 interface FormData {
-    username: string;
+    name: string;
     email: string;
     password: string;
     passwordConfirmation: string;
 }
 
 const initialFormData: FormData = {
-    username: '',
+    name: '',
     email: '',
     password: '',
     passwordConfirmation: ''
@@ -37,11 +37,13 @@ function RegisterForm() {
 
         try {
             const token = await registerUser({
-                username: formData.username,
+                name: formData.name,
                 email: formData.email,
-                password: formData.password
+                password: formData.password,
+                password_confirmation: formData.passwordConfirmation,
             })
 
+            console.log(token)
             setSuccess('Registration successful!');
             setError(null);
 
@@ -67,9 +69,9 @@ function RegisterForm() {
 
                                             <div data-mdb-input-init className="form-outline">
                                                 <input type="text"
-                                                       id="username"
+                                                       id="name"
                                                        className="form-control form-control-lg"
-                                                       value={formData.username}
+                                                       value={formData.name}
                                                        onChange={handleChange}
                                                 />
                                                 <label className="form-label" htmlFor="username">Username</label>

@@ -1,10 +1,10 @@
 import axios from "axios";
-import jwt from 'jsonwebtoken';
 
 interface RegisterUserData {
-    username: string;
+    name: string;
     email: string;
     password: string;
+    password_confirmation: string;
 }
 
 interface RegisterResponse {
@@ -14,9 +14,14 @@ interface RegisterResponse {
 
 export async function registerUser(userData: RegisterUserData): Promise<string> {
     try {
-        const response = await axios.post<RegisterResponse>('#', userData);
+        const response = await axios.post<RegisterResponse>('http://157.245.123.144/api/auth/register', userData, {
+            headers: {
+                'Content-Type' : 'application/json'
+            }
+        });
 
         if (response.data.access_token) {
+            console.log(response.data.access_token)
             return response.data.access_token;
         } else {
             throw new Error('Registration failed');
