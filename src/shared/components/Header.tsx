@@ -19,11 +19,15 @@ function Header() {
                     </nav>
                     <div className="text-end">
                         <button type="button" className="btn btn-outline-light me-2">
-                            <Link className={`nav-link px-2 ${pathname === '/' ? 'active' : ''}`} href="/register">
+                            <Link className={`nav-link px-2 ${pathname === '/' ? 'active' : ''}`} href="/login">
                                 Login
                             </Link>
                         </button>
-                        <button type="button" className="btn btn-warning" >Sign-up</button>
+                        <button type="button" className="btn btn-warning" >
+                            <Link className={`nav-link px-2 ${pathname === '/' ? 'active' : ''}`} href="/register">
+                                Sign-up
+                            </Link>
+                        </button>
                     </div>
                 </div>
             </div>
