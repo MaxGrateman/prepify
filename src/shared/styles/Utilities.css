@@ -5,3 +5,7 @@
 .pointer-cursor {
     cursor: pointer;
 }
+
+.text-blue {
+    color: blue;
+}

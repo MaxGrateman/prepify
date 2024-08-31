@@ -1,3 +1,6 @@
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import 'animations.css';
+
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
@@ -27,6 +30,10 @@ body {
 a {
   color: white;
   text-decoration: none;
+}
+
+i {
+  z-index: 100;
 }
 
 @media (prefers-color-scheme: dark) {
