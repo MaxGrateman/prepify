@@ -41,18 +41,22 @@ function Header() {
                             Help
                         </Link>
                     </nav>
-                    <div className="text-end">
-                        <button type="button" className="btn btn-outline-light me-2">
-                            <Link className={`nav-link px-2 ${pathname === '/login' ? 'active' : ''}`} href="/login" onClick={(e) => handleLinkClick(e, '/login')}>
+                    <div className="d-flex justify-content-center align-items-center text-end col col-lg-auto mb-2 mb-md-0">
+
+                        <Link className={`nav-link ${pathname === '/login' ? 'active' : ''}`} href="/login" onClick={(e) => handleLinkClick(e, '/login')}>
+                            <button type="button" className="btn btn-outline-light me-2">
                                 Login
-                            </Link>
-                        </button>
-                        <button type="button" className="btn btn-warning">
-                            <Link className={`nav-link px-2 ${pathname === '/register' ? 'active' : ''}`} href="/register" onClick={(e) => handleLinkClick(e, '/register')}>
+                            </button>
+                        </Link>
+
+                        <Link className={`nav-link ${pathname === '/register' ? 'active' : ''}`} href="/register" onClick={(e) => handleLinkClick(e, '/register')}>
+                            <button type="button" className="btn btn-warning">
                                 Sign-up
-                            </Link>
-                        </button>
+                            </button>
+                        </Link>
+
                     </div>
+
                 </div>
             </div>
         </header>

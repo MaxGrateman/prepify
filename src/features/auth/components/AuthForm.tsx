@@ -140,7 +140,7 @@ function AuthForm({isRegister = false, apiUrl}: AuthFormProps) {
                                     <div className="row">
                                         <div className="col-md-6 mb-4 pb-2">
 
-                                            <div className="form-floating mb-3">
+                                            <div className="form-floating">
                                                 <input type={passwordVisible ? "text" : "password"}
                                                        placeholder="Password Confirmation"
                                                        required
@@ -164,9 +164,13 @@ function AuthForm({isRegister = false, apiUrl}: AuthFormProps) {
                                     )}
 
                                     {!isRegister && (
-                                        <Link className={`text-blue nav-link px-2 ${pathname === '/' ? 'active' : ''}`} href="/passwordRecover">
-                                            Forgot password?
-                                        </Link>
+                                        <div className="row">
+                                            <div className="col-md-4">
+                                                <Link className={`text-blue nav-link px-2 ${pathname === '/' ? 'active' : ''}`} href="/passwordRecover">
+                                                    Forgot password?
+                                                </Link>
+                                            </div>
+                                        </div>
                                     )}
 
                                     {error && <p style={{ color: 'red' }}>{error}</p>}
