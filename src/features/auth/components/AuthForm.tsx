@@ -1,7 +1,7 @@
 "use client";
 
 import '../styles/RegisterForm.css'
-import {useState} from 'react';
+import React, {ReactElement, useEffect, useState} from 'react';
 import {AuthUser} from '../api/auth';
 import Link from 'next/link'
 import {usePathname} from "next/navigation";
@@ -27,13 +27,74 @@ interface AuthFormProps {
 
 function AuthForm({isRegister = false, apiUrl}: AuthFormProps) {
     const pathname = usePathname();
-    const [formData, setFormData] = useState<FormData>(initialFormData);
+    const [formData, setFormData] = useState<FormData | any>(initialFormData);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
     const [passwordVisible, setPasswordVisible] = useState(false);
 
+    const [nameInput, setNameInput] = useState<string>('');
+    const [emailInput, setEmailInput] = useState('');
+    const [passwordInput, setPasswordInput] = useState('');
+    const [emailInputDirty, setEmailInputDirty] = useState(false);
+    const [passwordInputDirty, setPasswordInputDirty] = useState(false);
+    const [nameInputDirty, setNameInputDirty] = useState(false);
+    const [emailInputError, setEmailInputError] = useState('Email must be specified');
+    const [passwordInputError, setPasswordInputError] = useState('Password must be specified');
+    const [nameInputError, setNameInputError] = useState('Name must be specified');
+    const [formValid, setFormValid] = useState(false);
+
+    useEffect(() => {
+        if (emailInputError || nameInputError || passwordInputError) {
+            setFormValid(false);
+        } else {
+            setFormValid(true);
+        }
+    }, [emailInputError, nameInputError, passwordInputError]);
+
+    const emailRegexHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const email = e.target.value.toLowerCase();
+        setEmailInput(email);
+
+        const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        if (!regex.test(email)) {
+            setEmailInputError('Invalid email format');
+        } else {
+            setEmailInputError('');
+        }
+    };
+
+    const passwordRegexHandler = (e: any) => {
+        setPasswordInput(formData.password);
+        if (e.target.value.length < 3 || e.target.value.length > 20) {
+            setPasswordInputError("The password must be more than 3 and less than 20 characters")
+            if(!e.target.value) {
+                setPasswordInputError("Password must be specified")
+            }
+        } else {
+            setPasswordInputError("");
+        }
+
+    }
+
+    const nameRegexHandler = (e: any) => {
+        setNameInput(formData.name);
+        if (e.target.value.length < 3 || e.target.value.length > 20) {
+            setNameInputError("The name must be more than 3 and less than 20 characters")
+            if(!e.target.value) {
+                setNameInputError("Name must be specified")
+            }
+        } else {
+            setNameInputError("");
+        }
+
+    }
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.id]: e.target.value});
+        emailRegexHandler(e);
+        passwordRegexHandler(e);
+        nameRegexHandler(e);
     }
 
     const togglePasswordVisibility = () => {
@@ -43,28 +104,42 @@ function AuthForm({isRegister = false, apiUrl}: AuthFormProps) {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if(isRegister && formData.password !== formData.passwordConfirmation) {
+        if (isRegister && formData.password !== formData.passwordConfirmation) {
             setError("Passwords don't match");
             return;
         }
 
         try {
-            const token = await AuthUser(apiUrl,{
+            await AuthUser(apiUrl, {
                 ...formData,
-                ...(isRegister && {password_confirmation: formData.passwordConfirmation}),
-            })
-
+                ...(isRegister && { password_confirmation: formData.passwordConfirmation }),
+            });
             setSuccess(isRegister ? 'Registration successful!' : 'Login Successful');
             setError(null);
-
-
-            localStorage.setItem('token', token);
         } catch (error: any) {
-            setFormData(initialFormData)
+            setFormData(initialFormData);
             setError(error.message);
             setSuccess(null);
         }
+    };
+
+    const blurHandler = (e: any) => {
+        switch (e.target.name) {
+            case 'email':
+                setEmailInputDirty(true);
+                break;
+            case 'name':
+                setNameInputDirty(true);
+                break;
+            case 'password':
+                setPasswordInputDirty(true);
+                break;
+            case 'passwordConfirmation':
+                setPasswordInputDirty(true);
+        }
     }
+
+
 
     return(
         <section className="vh-90">
@@ -81,12 +156,13 @@ function AuthForm({isRegister = false, apiUrl}: AuthFormProps) {
 
                                                 <div data-mdb-input-init className="form-floating mb-3">
                                                     <input type="text"
+                                                           name="name"
                                                            id="name"
-                                                           required
                                                            placeholder="Username"
                                                            className="form-control form-control-lg"
                                                            value={formData.name}
                                                            onChange={handleChange}
+                                                           onBlur={e => blurHandler(e)}
                                                     />
                                                     <label className="form-label" htmlFor="username">Username</label>
 
@@ -101,11 +177,12 @@ function AuthForm({isRegister = false, apiUrl}: AuthFormProps) {
                                             <div data-mdb-input-init className="form-floating mb-3">
                                                 <input type="email"
                                                        id="email"
+                                                       name="email"
                                                        placeholder="E-mail"
-                                                       required
                                                        className="form-control form-control-lg"
                                                        value={formData.email}
                                                        onChange={handleChange}
+                                                       onBlur={e => blurHandler(e)}
                                                 />
                                                 <label className="form-label" htmlFor="email">E-mail</label>
                                             </div>
@@ -117,11 +194,12 @@ function AuthForm({isRegister = false, apiUrl}: AuthFormProps) {
                                             <div data-mdb-input-init className="form-floating mb-3">
                                                 <input type={passwordVisible ? "text" : "password"}
                                                        id="password"
+                                                       name='password'
                                                        placeholder="Password"
-                                                       required
                                                        className="form-control form-control-lg"
                                                        value={formData.password}
                                                        onChange={handleChange}
+                                                       onBlur={e => blurHandler(e)}
                                                 />
                                                 <label className="form-label" htmlFor="password">Password</label>
                                                 <span
@@ -143,11 +221,12 @@ function AuthForm({isRegister = false, apiUrl}: AuthFormProps) {
                                             <div className="form-floating">
                                                 <input type={passwordVisible ? "text" : "password"}
                                                        placeholder="Password Confirmation"
-                                                       required
                                                        id="passwordConfirmation"
+                                                       name='passwordConfirmation'
                                                        className="form-control form-control-lg"
                                                        value={formData.passwordConfirmation}
                                                        onChange={handleChange}
+                                                       onBlur={e => blurHandler(e)}
                                                 />
                                                 <span
                                                     className="position-absolute top-50 end-0 translate-middle-y me-3 "
@@ -173,7 +252,10 @@ function AuthForm({isRegister = false, apiUrl}: AuthFormProps) {
                                         </div>
                                     )}
 
-                                    {error && <p style={{ color: 'red' }}>{error}</p>}
+                                    {(nameInputDirty && nameInputError) && <div className="alert alert-danger mt-1" role="alert">{nameInputError}</div>}
+                                    {(emailInputDirty && emailInputError) && <div className="alert alert-danger mt-1" role="alert">{emailInputError}</div>}
+                                    {(passwordInputDirty && passwordInputError) && <div className="alert alert-danger mt-1" role="alert">{passwordInputError}</div>}
+                                    {error && <div className="alert alert-danger" role="alert">{error}</div>}
                                     {success && <p style={{ color: 'green' }}>{success}</p>}
 
                                     <div className="mt-4 pt-2">
@@ -181,6 +263,7 @@ function AuthForm({isRegister = false, apiUrl}: AuthFormProps) {
                                                className="btn btn-primary btn-lg"
                                                type="submit"
                                                value={isRegister ? 'Register' : 'Login'}
+                                               disabled={!formValid}
                                         />
                                     </div>
 

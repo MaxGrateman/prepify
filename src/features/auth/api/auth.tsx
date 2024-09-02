@@ -1,4 +1,6 @@
 import axios from "axios";
+import Cookies from "js-cookie";
+import {useRouter} from "next/navigation";
 
 interface AuthUserData {
     name: string;
@@ -13,25 +15,27 @@ interface AuthResponse {
 
 export async function AuthUser(
     url: string,
-    userData: { passwordConfirmation?: string; password: string; name?: string; email: string }): Promise<string> {
+    userData: { passwordConfirmation?: string; password: string; name?: string; email: string }
+): Promise<void> {
     try {
         const response = await axios.post<AuthResponse>(url, userData, {
             headers: {
-                'Content-Type' : 'application/json'
-            }
+                'Content-Type': 'application/json',
+            },
         });
 
         if (response.data.access_token) {
-            console.log(response.data)
-            return response.data.access_token;
+            Cookies.set('token', response.data.access_token, { expires: 7, secure: true, sameSite: 'strict' });
+
+            const router = useRouter();
+            router.push('/profile');
         } else {
             throw new Error('Authentication failed');
         }
     } catch (error) {
         if (axios.isAxiosError(error)) {
-            throw new Error(error.response?.data?.measure || 'Undefined error')
+            throw new Error(error.response?.data?.message || 'Undefined error');
         }
         throw new Error('Unexpected error');
     }
 }
-
