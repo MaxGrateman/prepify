@@ -1,6 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import {useRouter} from "next/navigation";
+import React from "react";
 
 interface AuthUserData {
     name: string;
@@ -14,6 +14,7 @@ interface AuthResponse {
 }
 
 export async function AuthUser(
+    router: any,
     url: string,
     userData: { passwordConfirmation?: string; password: string; name?: string; email: string }
 ): Promise<void> {
@@ -26,12 +27,10 @@ export async function AuthUser(
 
         if (response.data.access_token) {
             Cookies.set('token', response.data.access_token, { expires: 7, secure: true, sameSite: 'strict' });
-
-            const router = useRouter();
-            router.push('/profile');
         } else {
             throw new Error('Authentication failed');
         }
+
     } catch (error) {
         if (axios.isAxiosError(error)) {
             throw new Error(error.response?.data?.message || 'Undefined error');
