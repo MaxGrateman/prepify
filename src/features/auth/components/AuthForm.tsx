@@ -61,6 +61,8 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
             });
             setSuccess(isRegister ? 'Registration successful!' : 'Login Successful');
             setError(null);
+
+            router.push('/profile')
         } catch (error: any) {
             setFormData(initialFormData);
             setError(error.message);
@@ -177,7 +179,7 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
                                         </div>
                                     )}
 
-                                    {error && <div className="alert alert-danger" role="alert">{error}</div>}
+                                    {error && <div className="alert alert-danger mt-2" role="alert">{error}</div>}
                                     {success && <p style={{ color: 'green' }}>{success}</p>}
 
                                     <div className="mt-4 pt-2">
