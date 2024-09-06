@@ -3,6 +3,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { apiPasswordRecover } from "@/features/auth/api/apiUrl";
+import {useRouter} from "next/navigation";
 
 {/*Компонент по востановлению пароля*/}
 interface FormData {
@@ -17,6 +18,7 @@ function PasswordRecover() {
     const [formData, setFormData] = useState<FormData>(initialEmail);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
+    const router = useRouter();
 
     {/*Функция по отслеживанию инпута*/}
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,11 +32,10 @@ function PasswordRecover() {
         try {
             const response = await axios.post(apiPasswordRecover, { email: formData.email });
 
-            setSuccess('Please, check your e-mail');
             setError(null);
+            router.push('/passwordSuccess')
         } catch (error: any) {
             setError(error.message);
-            setSuccess(null);
         }
     };
 

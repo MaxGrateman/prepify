@@ -4,7 +4,7 @@ import '../../shared/styles/Header.css';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useRouteLoading } from '@/shared/hooks/useRouteLoading';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from "js-cookie";
 import {UserProfile} from "@/features/profile/components/Profile";
@@ -13,6 +13,16 @@ function Header(UserProfile: any) {
     const router = useRouter();
     const pathname = usePathname();
     const [isLoading, setIsLoading] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const token = Cookies.get('token');
+        if (token) {
+            setIsLoggedIn(true);
+        } else {
+            setIsLoggedIn(false)
+        }
+    })
 
     useRouteLoading(
         () => setIsLoading(true),
@@ -44,25 +54,33 @@ function Header(UserProfile: any) {
                         </Link>
                     </nav>
                     <div className="d-flex justify-content-center align-items-center text-end col col-lg-auto mb-2 mb-md-0">
-
-                        {Cookies.get ?
+                        {!isLoggedIn && (
                             <>
-                            <Link className={`nav-link ${pathname === '/login' ? 'active' : ''}`} href="/login" onClick={(e) => handleLinkClick(e, '/login')}>
-                            <button type="button" className="btn btn-outline-light me-2">
-                                Login
-                            </button>
-                            </Link>
+                                <Link className={`nav-link`} href="/login" onClick={(e) => handleLinkClick(e, '/login')}>
+                                    <button type="button" className="btn btn-outline-light me-2">
+                                        Login
+                                    </button>
+                                </Link>
 
-                        <Link className={`nav-link ${pathname === '/register' ? 'active' : ''}`} href="/register" onClick={(e) => handleLinkClick(e, '/register')}>
-                            <button type="button" className="btn btn-warning">
-                                Sign-up
-                            </button>
-                        </Link></> :
-                            <div>
-                                <img src={UserProfile.image_path} alt="profile_image"/>
-                            </div>
-                        }
+                                <Link className={`nav-link`} href="/register" onClick={(e) => handleLinkClick(e, '/register')}>
+                                    <button type="button" className="btn btn-warning">
+                                        Sign-up
+                                    </button>
+                                </Link>
+                            </>
+                        )}
 
+                        {isLoggedIn && (
+                            <>
+                                <img
+                                    src={UserProfile.image_path}
+                                    alt="User Image"
+                                    width={50}
+                                    height={50}
+                                    className="rounded-circle"
+                                />
+                            </>
+                        )}
                     </div>
 
                 </div>
