@@ -7,9 +7,8 @@ import { useRouteLoading } from '@/shared/hooks/useRouteLoading';
 import {useEffect, useState} from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from "js-cookie";
-import {UserProfile} from "@/features/profile/components/Profile";
 
-function Header(UserProfile: any) {
+function Header() {
     const router = useRouter();
     const pathname = usePathname();
     const [isLoading, setIsLoading] = useState(false);
@@ -72,13 +71,13 @@ function Header(UserProfile: any) {
 
                         {isLoggedIn && (
                             <>
-                                <img
-                                    src={UserProfile.image_path}
-                                    alt="User Image"
+                                {/*<img
+                                    src={userProfile.image_path}
+                                    alt="Avatar"
                                     width={50}
                                     height={50}
                                     className="rounded-circle"
-                                />
+                                />*/}
                             </>
                         )}
                     </div>

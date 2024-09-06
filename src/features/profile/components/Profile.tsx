@@ -30,6 +30,8 @@ function Profile() {
     const [error, setError] = useState('');
     const router = useRouter();
 
+
+
     {/*хук беспрерывного получению данных токена с сервера*/}
     useEffect(() => {
         const fetchUserData = async () => {
@@ -75,8 +77,8 @@ function Profile() {
                                 <div className="card-body text-center">
                                     <img
                                         src={userData.image_path ?? 'N/A'}
-                                        alt="profile_image"
-                                        className="rounded-circle img-fluid" width={150} height={150}/>
+                                        alt="avatar"
+                                        className="rounded-circle img-fluid" style={{ width: '200px', aspectRatio: '1 / 1' }}/>
                                         <h5 className="my-3">{userData.name}</h5>
                                         <p className="text-muted mb-1">{userData.level ?? 'N/A'}</p>
                                         <p className="text-muted mb-4">{userData.about ?? 'N/A'}</p>
