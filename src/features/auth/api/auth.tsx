@@ -2,6 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import React from "react";
 
+{/*Компонент авторизации пользователя по токену, отправляет введеный данные и сохраняет токен в куки*/}
 interface AuthUserData {
     name: string;
     email: string;

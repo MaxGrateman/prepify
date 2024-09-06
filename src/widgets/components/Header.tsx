@@ -6,8 +6,10 @@ import Link from 'next/link';
 import { useRouteLoading } from '@/shared/hooks/useRouteLoading';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Cookies from "js-cookie";
+import {UserProfile} from "@/features/profile/components/Profile";
 
-function Header() {
+function Header(UserProfile: any) {
     const router = useRouter();
     const pathname = usePathname();
     const [isLoading, setIsLoading] = useState(false);
@@ -43,17 +45,23 @@ function Header() {
                     </nav>
                     <div className="d-flex justify-content-center align-items-center text-end col col-lg-auto mb-2 mb-md-0">
 
-                        <Link className={`nav-link ${pathname === '/login' ? 'active' : ''}`} href="/login" onClick={(e) => handleLinkClick(e, '/login')}>
+                        {Cookies.get ?
+                            <>
+                            <Link className={`nav-link ${pathname === '/login' ? 'active' : ''}`} href="/login" onClick={(e) => handleLinkClick(e, '/login')}>
                             <button type="button" className="btn btn-outline-light me-2">
                                 Login
                             </button>
-                        </Link>
+                            </Link>
 
                         <Link className={`nav-link ${pathname === '/register' ? 'active' : ''}`} href="/register" onClick={(e) => handleLinkClick(e, '/register')}>
                             <button type="button" className="btn btn-warning">
                                 Sign-up
                             </button>
-                        </Link>
+                        </Link></> :
+                            <div>
+                                <img src={UserProfile.image_path} alt="profile_image"/>
+                            </div>
+                        }
 
                     </div>
 

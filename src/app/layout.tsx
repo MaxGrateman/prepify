@@ -20,6 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        {/*Главный компонент-лэйаут с подключенной начальной страницой*/}
         <Header/>
         <div className="page-transition">
             {children}

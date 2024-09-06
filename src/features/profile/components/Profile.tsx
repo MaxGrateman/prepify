@@ -5,8 +5,9 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import {apiProfile} from "@/features/profile/api/apiUrlProfile";
+{/*Компонент профиля*/}
 
-interface UserProfile {
+export interface UserProfile {
     about: string | null;
     age: number | null;
     country: string | null;
@@ -29,6 +30,7 @@ function Profile() {
     const [error, setError] = useState('');
     const router = useRouter();
 
+    {/*хук беспрерывного получению данных токена с сервера*/}
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -38,18 +40,14 @@ function Profile() {
                     return;
                 }
 
-                console.log('Fetching user data with token:', token);
-
                 const response = await axios.get<ApiResponse>(apiProfile, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-
-                console.log('Received data:', response.data.user);
                 setUserData(response.data.user);
+
             } catch (error) {
-                console.error('Fetch error:', error);
                 setError('Failed to fetch user data');
                 router.push('/login');
             }

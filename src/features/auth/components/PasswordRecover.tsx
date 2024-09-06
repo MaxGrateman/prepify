@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { apiPasswordRecover } from "@/features/auth/api/apiUrl";
 
+{/*Компонент по востановлению пароля*/}
 interface FormData {
     email: string;
 }
@@ -17,10 +18,12 @@ function PasswordRecover() {
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
 
+    {/*Функция по отслеживанию инпута*/}
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
 
+    {/*Функция по отправки формы имейла на сервер*/}
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 

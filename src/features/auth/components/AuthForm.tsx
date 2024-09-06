@@ -34,18 +34,19 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
     const [passwordVisible, setPasswordVisible] = useState(false);
 
 
-
+    {/*Фкнция по отслеживанию полей инпута*/}
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
         setFormData({ ...formData, [id]: value });
     }
 
+    {/*Функция скрытого-пароля*/}
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     }
 
 
-
+    {/*Функция срабатывающая по нажатию, проверяет данные и перенаправляет на профиль*/}
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -179,6 +180,7 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
                                         </div>
                                     )}
 
+                                    {/*Вывод ошибок и удачных уведомлений*/}
                                     {error && <div className="alert alert-danger mt-2" role="alert">{error}</div>}
                                     {success && <p style={{ color: 'green' }}>{success}</p>}
 

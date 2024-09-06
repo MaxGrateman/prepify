@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
-
+{/*Компонент для плавной маршрутизации с отрабатывающей анимации свайпа*/}
 export const useRouteLoading = (onStart: any, onComplete: any) => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
