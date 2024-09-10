@@ -6,10 +6,15 @@ import Link from 'next/link';
 import { useRouteLoading } from '@/shared/hooks/useRouteLoading';
 import {useEffect, useState} from 'react';
 import { useRouter } from 'next/navigation';
+import {fetchUserData} from "@/lib/features/profile/userSlice";
 import Cookies from "js-cookie";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "@/lib/store";
 
 function Header() {
     const router = useRouter();
+    const dispatch: AppDispatch = useDispatch();
+    const { user, loading } = useSelector((state: RootState) => state.user);
     const pathname = usePathname();
     const [isLoading, setIsLoading] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -18,10 +23,17 @@ function Header() {
         const token = Cookies.get('token');
         if (token) {
             setIsLoggedIn(true);
+            dispatch(fetchUserData());
         } else {
-            setIsLoggedIn(false)
+            setIsLoggedIn(false);
         }
-    })
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (user && user.image_path) {
+            setIsLoggedIn(true);
+        }
+    }, [user]);
 
     useRouteLoading(
         () => setIsLoading(true),
@@ -53,32 +65,32 @@ function Header() {
                         </Link>
                     </nav>
                     <div className="d-flex justify-content-center align-items-center text-end col col-lg-auto mb-2 mb-md-0">
-                        {!isLoggedIn && (
+                        {!isLoggedIn ? (
                             <>
-                                <Link className={`nav-link`} href="/login" onClick={(e) => handleLinkClick(e, '/login')}>
+                                <Link className="nav-link" href="/login" onClick={(e) => handleLinkClick(e, '/login')}>
                                     <button type="button" className="btn btn-outline-light me-2">
                                         Login
                                     </button>
                                 </Link>
 
-                                <Link className={`nav-link`} href="/register" onClick={(e) => handleLinkClick(e, '/register')}>
+                                <Link className="nav-link" href="/register" onClick={(e) => handleLinkClick(e, '/register')}>
                                     <button type="button" className="btn btn-warning">
                                         Sign-up
                                     </button>
                                 </Link>
                             </>
-                        )}
-
-                        {isLoggedIn && (
-                            <>
-                                {/*<img
-                                    src={userProfile.image_path}
+                        ) : (
+                            !loading && user && user.image_path ? (
+                                <img
+                                    src={user.image_path || '/hq720.jpg'}
                                     alt="Avatar"
                                     width={50}
                                     height={50}
                                     className="rounded-circle"
-                                />*/}
-                            </>
+                                />
+                            ) : (
+                                <p>Loading...</p>
+                            )
                         )}
                     </div>
 

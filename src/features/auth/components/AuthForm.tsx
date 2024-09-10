@@ -1,10 +1,13 @@
 "use client";
 
 import '../styles/RegisterForm.css'
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import { AuthUser } from "@/features/auth/api/auth";
 import Link from 'next/link'
 import { usePathname, useRouter } from "next/navigation";
+import {useDispatch} from "react-redux";
+import {fetchUserData} from "@/lib/features/profile/userSlice";
+import {AppDispatch} from "@/lib/store";
 
 interface FormData {
     name?: string;
@@ -28,6 +31,7 @@ interface AuthFormProps {
 function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
     const router = useRouter();
     const pathname = usePathname();
+    const dispatch: AppDispatch  = useDispatch();
     const [formData, setFormData] = useState<FormData>(initialFormData);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
@@ -56,14 +60,18 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
         }
 
         try {
+            // Авторизация пользователя
             await AuthUser(router, apiUrl, {
                 ...formData,
                 ...(isRegister && { passwordConfirmation: formData.password_confirmation }),
             });
+
             setSuccess(isRegister ? 'Registration successful!' : 'Login Successful');
             setError(null);
 
-            router.push('/profile')
+            dispatch(fetchUserData());
+
+            router.push('/profile');
         } catch (error: any) {
             setFormData(initialFormData);
             setError(error.message);
