@@ -8,7 +8,11 @@ import {AppDispatch, RootState} from "@/lib/store";
 
 {/*Компонент профиля*/}
 
-function Profile() {
+interface ProfileProps {
+    userId: string;
+}
+
+const Profile: React.FC<ProfileProps> = ({ userId }) => {
     const dispatch = useDispatch<AppDispatch>();
     const {user, loading, error} = useSelector((state: RootState) => state.user);
     const router = useRouter();
@@ -17,40 +21,40 @@ function Profile() {
 
     {/*хук беспрерывного получению данных токена с сервера*/}
     useEffect(() => {
-        if (!user) {
+        if (userId) {
             dispatch(fetchUserData());
         }
-    }, [dispatch, user]);
+    }, [dispatch, userId]);
 
     if (loading) {
-        return <div>...Loading</div>
+        return <div>...Loading</div>;
     }
 
     if (error) {
-        return <div>{error}</div>
+        return <div>{error}</div>;
     }
 
     if (user) {
         return (
-            <section style={{backgroundColor: '#eee'}} className="vh-99">
+            <section className="vh-99 bg-light">
                 <div className="container py-5">
                     <div className="row">
                         <div className="col-lg-4">
                             <div className="card mb-4">
                                 <div className="card-body text-center">
                                     <img
-                                        src={user.image_path ?? 'N/A'}
+                                        src={user.image_path ?? 'Not indicated'}
                                         alt="avatar"
-                                        className="rounded-circle img-fluid" style={{ width: '200px', aspectRatio: '1 / 1' }}/>
+                                        className="rounded-circle img-fluid" style={{ width: '200px', height: '200px', objectFit: 'cover' }}/>
                                         <h5 className="my-3">{user.name}</h5>
-                                        <p className="text-muted mb-1">{user.level ?? 'N/A'}</p>
-                                        <p className="text-muted mb-4">{user.about ?? 'N/A'}</p>
+                                        <p className="text-muted mb-1">{user.level ?? 'Not indicated'}</p>
+                                        <p className="text-muted mb-4">{user.about ?? 'Not indicated'}</p>
                                         <div className="d-flex justify-content-center mb-2">
                                             <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                                    className="btn btn-primary">Follow
+                                                    className="btn btn-dark">Follow
                                             </button>
                                             <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                                    className="btn btn-outline-primary ms-1">Message
+                                                    className="btn btn-success ms-1">Message
                                             </button>
                                         </div>
                                 </div>
@@ -108,7 +112,7 @@ function Profile() {
                                                     <p className="mb-0">Age</p>
                                                 </div>
                                                 <div className="col-sm-9">
-                                                    <p className="text-muted mb-0">{user.age ?? 'N/A'}</p>
+                                                    <p className="text-muted mb-0">{user.age ?? 'Not indicated'}</p>
                                                 </div>
                                             </div>
                                     <hr></hr>
@@ -117,7 +121,7 @@ function Profile() {
                                                         <p className="mb-0">Place of work</p>
                                                     </div>
                                                     <div className="col-sm-9">
-                                                        <p className="text-muted mb-0">{user.place_of_work ?? 'N/A'}</p>
+                                                        <p className="text-muted mb-0">{user.place_of_work ?? 'Not indicated'}</p>
                                                     </div>
                                                 </div>
                                     <hr></hr>
@@ -126,7 +130,7 @@ function Profile() {
                                                         <p className="mb-0">Stack</p>
                                                     </div>
                                                     <div className="col-sm-9">
-                                                        <p className="text-muted mb-0">{user.stack ?? 'N/A'}</p>
+                                                        <p className="text-muted mb-0">{user.stack ?? 'Not indicated'}</p>
                                                     </div>
                                                 </div>
                                     <hr></hr>
@@ -135,7 +139,7 @@ function Profile() {
                                                         <p className="mb-0">Country</p>
                                                     </div>
                                                     <div className="col-sm-9">
-                                                        <p className="text-muted mb-0">{user.country ?? 'N/A'}</p>
+                                                        <p className="text-muted mb-0">{user.country ?? 'Not indicated'}</p>
                                                     </div>
                                                 </div>
                                 </div>
@@ -145,36 +149,36 @@ function Profile() {
                                     <div className="card mb-4 mb-md-0">
                                         <div className="card-body">
                                             <p className="mb-4"><span
-                                                className="text-primary font-italic me-1">assigment</span> Project
+                                                className="text-primary font-italic me-1"></span> Project
                                                 Status
                                             </p>
                                             <p className="mb-1" style={{fontSize: ".77rem"}}>Web Design</p>
                                             <div className="progress rounded" style={{height: '5px'}}>
-                                                <div className="progress-bar" role="progressbar" style={{width: '80%'}}
+                                                <div className="progress-bar bg-success" role="progressbar" style={{width: '80%'}}
                                                      aria-valuenow={80}
                                                      aria-valuemin={0} aria-valuemax={100}></div>
                                             </div>
                                             <p className="mt-4 mb-1" style={{fontSize: ".77rem"}}>Website Markup</p>
                                             <div className="progress rounded" style={{height: '5px'}}>
-                                                <div className="progress-bar" role="progressbar" style={{width: '72%'}}
+                                                <div className="progress-bar bg-success" role="progressbar" style={{width: '72%'}}
                                                      aria-valuenow={72}
                                                      aria-valuemin={0} aria-valuemax={100}></div>
                                             </div>
                                             <p className="mt-4 mb-1" style={{ fontSize: ".77rem"}}>One Page</p>
                                             <div className="progress rounded" style={{height: '5px'}}>
-                                                <div className="progress-bar" role="progressbar" style={{ width: '89%'}}
+                                                <div className="progress-bar bg-success" role="progressbar" style={{ width: '89%'}}
                                                      aria-valuenow={89}
                                                      aria-valuemin={0} aria-valuemax={100}></div>
                                             </div>
                                             <p className="mt-4 mb-1" style={{fontSize: ".77rem"}}>Mobile Template</p>
                                             <div className="progress rounded" style={{height: '5px'}}>
-                                                <div className="progress-bar" role="progressbar" style={{ width: '55%'}}
+                                                <div className="progress-bar bg-success" role="progressbar" style={{ width: '55%'}}
                                                      aria-valuenow={55}
                                                      aria-valuemin={0} aria-valuemax={100}></div>
                                             </div>
                                             <p className="mt-4 mb-1" style={{ fontSize: ".77rem"}}>Backend API</p>
                                             <div className="progress rounded mb-2" style={{ height: '5px'}}>
-                                                <div className="progress-bar" role="progressbar" style={{ width: '66%'}}
+                                                <div className="progress-bar bg-success" role="progressbar" style={{ width: '66%'}}
                                                      aria-valuenow={66}
                                                      aria-valuemin={0} aria-valuemax={100}></div>
                                             </div>
@@ -185,36 +189,36 @@ function Profile() {
                                     <div className="card mb-4 mb-md-0">
                                         <div className="card-body">
                                             <p className="mb-4"><span
-                                                className="text-primary font-italic me-1">assigment</span> Project
+                                                className="text-primary font-italic me-1"></span> Project
                                                 Status
                                             </p>
                                             <p className="mb-1" style={{ fontSize: '.77rem'}}>Web Design</p>
                                             <div className="progress rounded" style={{ height: '5px'}}>
-                                                <div className="progress-bar" role="progressbar" style={{width: '80%'}}
+                                                <div className="progress-bar bg-success" role="progressbar" style={{width: '80%'}}
                                                      aria-valuenow={80}
                                                      aria-valuemin={0} aria-valuemax={100}></div>
                                             </div>
                                             <p className="mt-4 mb-1" style={{ fontSize: ".77rem"}}>Website Markup</p>
                                             <div className="progress rounded" style={{ height: '5px'}}>
-                                                <div className="progress-bar" role="progressbar" style={{ width: '80%'}}
+                                                <div className="progress-bar bg-success" role="progressbar" style={{ width: '80%'}}
                                                      aria-valuenow={72}
                                                      aria-valuemin={0} aria-valuemax={100}></div>
                                             </div>
                                             <p className="mt-4 mb-1" style={{ fontSize: ".77rem"}}>One Page</p>
                                             <div className="progress rounded" style={{height: '5px'}}>
-                                                <div className="progress-bar" role="progressbar" style={{ width: '89%'}}
+                                                <div className="progress-bar bg-success" role="progressbar" style={{ width: '89%'}}
                                                      aria-valuenow={89}
                                                      aria-valuemin={0} aria-valuemax={100}></div>
                                             </div>
                                             <p className="mt-4 mb-1" style={{ fontSize: ".77rem"}}>Mobile Template</p>
                                             <div className="progress rounded" style={{ height: '5px' }}>
-                                                <div className="progress-bar" role="progressbar" style={{ width: '80%'}}
+                                                <div className="progress-bar bg-success" role="progressbar" style={{ width: '80%'}}
                                                      aria-valuenow={55}
                                                      aria-valuemin={0} aria-valuemax={100}></div>
                                             </div>
                                             <p className="mt-4 mb-1" style={{ fontSize: ".77rem"}}>Backend API</p>
                                             <div className="progress rounded mb-2" style={{ height: '5px'}}>
-                                                <div className="progress-bar" role="progressbar" style={{ width: '80%'}}
+                                                <div className="progress-bar bg-success" role="progressbar" style={{ width: '80%'}}
                                                      aria-valuenow={66}
                                                      aria-valuemin={0} aria-valuemax={100}></div>
                                             </div>

@@ -41,7 +41,7 @@ function PasswordRecover() {
 
     return (
         <section className="vh-90">
-            <div className="container py-5 h-100 slideIn">
+            <div className="container py-5 h-100">
                 <div className="row justify-content-center align-items-center h-100">
                     <div className="col-12 col-lg-9 col-xl-7">
                         <div className="card shadow-2-strong card-registration" style={{ borderRadius: "15px" }}>

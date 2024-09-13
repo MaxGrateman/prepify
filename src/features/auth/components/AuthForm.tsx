@@ -37,7 +37,6 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
     const [success, setSuccess] = useState<string | null>(null);
     const [passwordVisible, setPasswordVisible] = useState(false);
 
-
     {/*Фкнция по отслеживанию полей инпута*/}
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
@@ -69,9 +68,11 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
             setSuccess(isRegister ? 'Registration successful!' : 'Login Successful');
             setError(null);
 
-            dispatch(fetchUserData());
+            const userResponse = await dispatch(fetchUserData()).unwrap();
 
-            router.push('/profile');
+            const userId = userResponse.id;
+
+            router.push(`/profile/${userId}`);
         } catch (error: any) {
             setFormData(initialFormData);
             setError(error.message);
@@ -83,7 +84,7 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
 
     return(
         <section className="vh-90">
-            <div className="container py-5 h-100 slideIn">
+            <div className="container py-5 h-100">
                 <div className="row justify-content-center align-items-center h-100">
                     <div className="col-12 col-lg-9 col-xl-7">
                         <div className="card shadow-2-strong card-registration" style={{borderRadius: "15px"}}>
@@ -98,6 +99,7 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
                                                     <input type="text"
                                                            name="name"
                                                            id="name"
+                                                           required
                                                            placeholder="Username"
                                                            className="form-control form-control-lg"
                                                            value={formData.name}
@@ -117,6 +119,7 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
                                                 <input type="email"
                                                        id="email"
                                                        name="email"
+                                                       required
                                                        placeholder="E-mail"
                                                        className="form-control form-control-lg"
                                                        value={formData.email}
@@ -133,6 +136,7 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
                                                 <input type={passwordVisible ? "text" : "password"}
                                                        id="password"
                                                        name='password'
+                                                       required
                                                        placeholder="Password"
                                                        className="form-control form-control-lg"
                                                        value={formData.password}
@@ -160,6 +164,7 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
                                                        placeholder="Password Confirmation"
                                                        id="password_confirmation"
                                                        name='passwordConfirmation'
+                                                       required
                                                        className="form-control form-control-lg"
                                                        value={formData.password_confirmation}
                                                        onChange={handleChange}

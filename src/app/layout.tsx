@@ -23,7 +23,7 @@ export default function RootLayout({
               <body className={inter.className}>
                   {/* Main layout components */}
                   <Header />
-                  <div className="page-transition">
+                  <div>
                       {children}
                   </div>
               </body>
