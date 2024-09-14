@@ -1,14 +1,14 @@
 'use client';
 
 import '../../shared/styles/Header.css';
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import {useEffect, useState} from 'react';
 import { useRouter } from 'next/navigation';
-import {fetchUserData} from "@/lib/features/profile/userSlice";
+import {fetchUserData, logout} from "@/lib/features/profile/userSlice";
 import Cookies from "js-cookie";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "@/lib/store";
+import HeaderDropdown from "@/widgets/components/HeaderDropdown";
 
 function Header() {
     const router = useRouter();
@@ -25,6 +25,10 @@ function Header() {
             setIsLoggedIn(false);
         }
     }, [dispatch]);
+
+    const handleLogout = () => {
+        dispatch(logout())
+    }
 
     return (
         <header className="p-3 text-bg-dark">
@@ -55,16 +59,22 @@ function Header() {
                             </>
                         ) : (
                             !loading && user?.image_path ? (
-                                <img
-                                    src={user.image_path || '/hq720.jpg'}
-                                    alt="Avatar"
-                                    width={50}
-                                    height={50}
-                                    className="rounded-circle"
-                                    style={{ objectFit: 'cover' }}
-                                />
+                                <HeaderDropdown user_image={
+                                    <img
+                                        src={user.image_path || '/hq720.jpg'}
+                                        alt="Avatar"
+                                        width={50}
+                                        height={50}
+                                        className="rounded-circle"
+                                        style={{ objectFit: 'cover' }}
+                                    />
+                                } userId={user.id}>
+                                    <Link href="/" onClick={handleLogout} className="text-decoration-none text-reset ">Log out</Link>
+                                </HeaderDropdown>
                             ) : (
-                                <p>Loading...</p>
+                                <div className="spinner-border" role="status">
+                                    <span className="visually-hidden">Загрузка...</span>
+                                </div>
                             )
                         )}
                     </div>

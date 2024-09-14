@@ -1,3 +1,7 @@
 .main {
   min-height: 89vh;
 }
+
+.home-page-container {
+  width: 1200px;
+}
