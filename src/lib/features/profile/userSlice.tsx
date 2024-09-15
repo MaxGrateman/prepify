@@ -47,25 +47,25 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setUser(state, action: PayloadAction<UserProfile>) {
+        setUser(state: UserState, action: PayloadAction<UserProfile>) {
             state.user = action.payload;
         },
-        logout(state) {
+        logout(state: UserState) {
             state.user = null;
             Cookies.remove('token');
         },
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchUserData.pending, (state) => {
+            .addCase(fetchUserData.pending, (state: UserState) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchUserData.fulfilled, (state, action: PayloadAction<UserProfile>) => {
+            .addCase(fetchUserData.fulfilled, (state: UserState, action: PayloadAction<UserProfile>) => {
                 state.user = action.payload;
                 state.loading = false;
             })
-            .addCase(fetchUserData.rejected, (state, action) => {
+            .addCase(fetchUserData.rejected, (state: UserState, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             });

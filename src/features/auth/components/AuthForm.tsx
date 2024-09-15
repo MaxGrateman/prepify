@@ -72,7 +72,9 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
 
             const userId = userResponse.id;
 
+            // Переход на профиль
             router.push(`/profile/${userId}`);
+
         } catch (error: any) {
             setFormData(initialFormData);
             setError(error.message);

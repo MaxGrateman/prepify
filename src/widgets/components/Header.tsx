@@ -14,15 +14,11 @@ function Header() {
     const router = useRouter();
     const dispatch:AppDispatch = useDispatch();
     const { user, loading } = useSelector((state: RootState) => state.user);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
         const token = Cookies.get('token');
         if (token) {
             dispatch(fetchUserData());
-            setIsLoggedIn(true);
-        } else {
-            setIsLoggedIn(false);
         }
     }, [dispatch]);
 
@@ -44,17 +40,13 @@ function Header() {
                         </Link>
                     </nav>
                     <div className="d-flex justify-content-center align-items-center text-end col col-lg-auto mb-2 mb-md-0">
-                        {!isLoggedIn ? (
+                        {!user ? (
                             <>
                                 <Link href="/login">
-                                    <button type="button" className="btn btn-outline-light me-2">
-                                        Login
-                                    </button>
+                                    <button type="button" className="btn btn-outline-light me-2">Login</button>
                                 </Link>
                                 <Link href="/register">
-                                    <button type="button" className="btn btn-success">
-                                        Sign-up
-                                    </button>
+                                    <button type="button" className="btn btn-success">Sign-up</button>
                                 </Link>
                             </>
                         ) : (
@@ -69,7 +61,7 @@ function Header() {
                                         style={{ objectFit: 'cover' }}
                                     />
                                 } userId={user.id}>
-                                    <Link href="/" onClick={handleLogout} className="text-decoration-none text-reset ">Log out</Link>
+                                    <Link href="/" onClick={handleLogout} className="text-decoration-none text-reset">Log out</Link>
                                 </HeaderDropdown>
                             ) : (
                                 <div className="spinner-border" role="status">

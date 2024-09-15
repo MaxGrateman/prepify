@@ -21,10 +21,10 @@ const Profile: React.FC<ProfileProps> = ({ userId }) => {
 
     {/*хук беспрерывного получению данных токена с сервера*/}
     useEffect(() => {
-        if (userId) {
+        if (userId && !user) {
             dispatch(fetchUserData());
         }
-    }, [dispatch, userId]);
+    }, [dispatch, userId, user]);
 
     if (loading) {
         return <div>...Loading</div>;
