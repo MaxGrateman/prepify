@@ -21,14 +21,21 @@ const Profile: React.FC<ProfileProps> = ({ userId }) => {
 
     {/*хук беспрерывного получению данных токена с сервера*/}
     useEffect(() => {
-        if (userId && !user) {
+        if (userId) {
             dispatch(fetchUserData());
         }
-    }, [dispatch, userId, user]);
+
+    }, [dispatch, userId]);
+
 
     if (loading) {
-        return <div>...Loading</div>;
+        return <div className="d-flex justify-content-center align-items-center vh-100">
+                    <div className="spinner-border" style={{width: '5rem', height: '5rem'}} role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>;
     }
+
 
     if (error) {
         return <div>{error}</div>;
@@ -36,7 +43,7 @@ const Profile: React.FC<ProfileProps> = ({ userId }) => {
 
     if (user) {
         return (
-            <section className="vh-99 bg-light">
+            <section className="vh-89 bg-light">
                 <div className="container py-5">
                     <div className="row">
                         <div className="col-lg-4">

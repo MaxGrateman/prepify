@@ -2,7 +2,7 @@
 
 import '../../shared/styles/Header.css';
 import Link from 'next/link';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import { useRouter } from 'next/navigation';
 import {fetchUserData, logout} from "@/lib/features/profile/userSlice";
 import Cookies from "js-cookie";
@@ -27,7 +27,7 @@ function Header() {
     }
 
     return (
-        <header className="p-3 text-bg-dark">
+        <header className="p-2 text-bg-dark">
             <div className="container">
                 <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-2">
                     <p className="fs-3 p-1 col-md-2 mb-2 mb-md-0 pointer-cursor">Prepify</p>
@@ -39,7 +39,7 @@ function Header() {
                             Courses
                         </Link>
                     </nav>
-                    <div className="d-flex justify-content-center align-items-center text-end col col-lg-auto mb-2 mb-md-0">
+                    <div className="d-flex justify-content-center align-items-center text-end col col-lg-auto mb-2 mb-md-0" style={{ minHeight: '50px' }}>
                         {!user ? (
                             <>
                                 <Link href="/login">

@@ -33,12 +33,13 @@ export default function HeaderDropdown({user_image, userId, children} : HeaderDr
     }, [isOpen]);
 
     return(
-        <div className="dropdown">
+        <div className="dropdown z-1">
             <button
-                className="btn rounded-5"
+                className="btn rounded-5 p-0"
                 type="button"
                 id="dropdownMenuButton"
                 onClick={toggleDropdown}
+                style={{ width: '50px', height: '50px' }}
             >
                 {user_image}
             </button>
