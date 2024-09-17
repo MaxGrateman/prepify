@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './features/profile/userSlice';
+import coursesReducer from './features/courses/coursSlice'
 
 export const store = configureStore({
     reducer: {
         user: userReducer,
+        courses: coursesReducer,
     },
 });
 

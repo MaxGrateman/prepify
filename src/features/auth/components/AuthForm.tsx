@@ -8,6 +8,9 @@ import { usePathname, useRouter } from "next/navigation";
 import {useDispatch} from "react-redux";
 import {fetchUserData} from "@/lib/features/profile/userSlice";
 import {AppDispatch} from "@/lib/store";
+import {GetServerSideProps} from "next";
+import {Cookie} from "next/dist/compiled/@next/font/dist/google";
+import Cookies from "js-cookie";
 
 interface FormData {
     name?: string;
@@ -95,7 +98,7 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
                                 <form onSubmit={handleSubmit} className="needs-validation">
                                     {isRegister && (
                                         <div className="row">
-                                            <div className="col-md-6 mb-4">
+                                            <div className="col mb-4">
 
                                                 <div data-mdb-input-init className="form-floating mb-3">
                                                     <input type="text"
@@ -116,7 +119,7 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
                                     )}
 
                                     <div className="row">
-                                        <div className="col-md-6 mb-4">
+                                        <div className="col mb-4">
                                             <div data-mdb-input-init className="form-floating mb-3">
                                                 <input type="email"
                                                        id="email"
@@ -133,7 +136,7 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
                                     </div>
 
                                     <div className="row">
-                                        <div className="col-md-6 mb-4 pb-2">
+                                        <div className="col mb-4 pb-2">
                                             <div data-mdb-input-init className="form-floating mb-3">
                                                 <input type={passwordVisible ? "text" : "password"}
                                                        id="password"
@@ -159,7 +162,7 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
 
                                     {isRegister && (
                                     <div className="row">
-                                        <div className="col-md-6 mb-4 pb-2">
+                                        <div className="col mb-4 pb-2">
 
                                             <div className="form-floating">
                                                 <input type={passwordVisible ? "text" : "password"}
@@ -201,7 +204,7 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
 
                                     <div className="mt-4 pt-2">
                                         <input data-mdb-ripple-init
-                                               className="btn btn-primary btn-lg"
+                                               className="btn btn-primary btn-lg w-100"
                                                type="submit"
                                                value={isRegister ? 'Register' : 'Login'}
                                         />
@@ -215,6 +218,23 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
             </div>
         </section>
     )
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+    const token = Cookies.get('token');
+
+    if (token) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+
+    return {
+        props: {},
+    }
 }
 
 export default AuthForm;

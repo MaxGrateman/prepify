@@ -12,7 +12,7 @@ export default function HeaderDropdown({user_image, userId, children} : HeaderDr
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDropdown = () => {
-        setIsOpen(true);
+        setIsOpen(prev => !prev);
     }
 
     const handleClickOutside = (e: any) => {
@@ -33,13 +33,14 @@ export default function HeaderDropdown({user_image, userId, children} : HeaderDr
     }, [isOpen]);
 
     return(
-        <div className="dropdown z-1">
+        <div className="dropdown text-end z-1">
             <button
-                className="btn rounded-5 p-0"
+                className="btn rounded-5 p-0 "
                 type="button"
                 id="dropdownMenuButton"
                 onClick={toggleDropdown}
-                style={{ width: '50px', height: '50px' }}
+                aria-expanded={isOpen ? "true" : "false"}
+                style={{ width: '50px', height: '50px', border: '0' }}
             >
                 {user_image}
             </button>
