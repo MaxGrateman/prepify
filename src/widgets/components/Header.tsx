@@ -1,6 +1,6 @@
 'use client';
 
-import '../../shared/styles/Header.css';
+import '../styles/Header.css';
 import Link from 'next/link';
 import {useEffect} from 'react';
 import { useRouter } from 'next/navigation';

@@ -1,21 +1,53 @@
 'use client'
 
-import Link from 'next/link';
-import {useSearchParams} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "@/lib/store";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {fetchCourses} from "@/lib/features/courses/coursSlice";
+import ModalCourse from "@/widgets/components/modalCourse";
+import Cookies from "js-cookie";
+
+interface Course {
+    id: number,
+    name: string | null,
+    description: string,
+}
 
 export default function Courses() {
     const dispatch = useDispatch<AppDispatch>();
     const searchParams = useSearchParams();
 
+    const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+    const [showModal, setShowModal] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const user = useSelector((state: RootState) => state.user);
     const {courses, loading, error} = useSelector((state: RootState) => state.courses);
+    const router = useRouter();
 
     useEffect(() => {
         dispatch(fetchCourses());
     }, [dispatch])
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    }
+
+    const handleButtonClick = (course: Course) => {
+        if (!user.user) {
+            setErrorMessage('Please, log in to continue');
+            setShowModal(false);
+
+            router.push('/login')
+        } else {
+            setSelectedCourse({
+                ...course,
+                name: course.name || 'No name available',
+            });
+            setShowModal(true);
+        }
+    }
 
     function handleSearch(term: string) {
 
@@ -47,22 +79,29 @@ export default function Courses() {
 
                     {error && <p>Error: {error}</p>}
 
-                    <table className="table table-light table-hover">
-                        <thead>
-                            <tr >
-                                <th scope="col">#</th>
-                                <th scope="col">Test</th>
-                            </tr>
-                        </thead>
-                        <tbody className="table-hover">
-                            {courses.map((course) => (
-                                <tr key={course.id}>
-                                    <th scope="row">{course.id}</th>
-                                    <td><Link href="#" className="text-dark nav-link px-2">{course.name}</Link></td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    {courses.map((course) => (
+                        <div className="col-sm-3 pt-4" key={course.id}>
+                            <div className="card">
+                                <div className="card-body">
+                                    <h5 className="card-title">{course.name ?? 'Default name'}</h5>
+                                    <button type="button"
+                                            className="btn btn-dark mt-5"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop"
+                                            onClick={() => handleButtonClick(course)}
+                                            >Start</button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+
+                    {selectedCourse && (
+                        <ModalCourse id={selectedCourse.id}
+                                     name={selectedCourse.name}
+                                     description={selectedCourse.description}
+                                     show={showModal}
+                                     onClose={handleCloseModal}/>
+                    )}
 
 
                 </div>
