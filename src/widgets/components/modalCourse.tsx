@@ -1,5 +1,6 @@
 import {useState} from "react";
 import './../styles/modalCourse.css'
+import {useRouter} from "next/navigation";
 
 interface ModalCourseProps {
     id: number;
@@ -10,11 +11,18 @@ interface ModalCourseProps {
 }
 
 const ModalCourse: React.FC<ModalCourseProps> = ({id, name, description, show, onClose}) => {
-    const [selectedCard, setSelectedCard] = useState(null);
+    const [selectedCard, setSelectedCard] = useState<string | null>(null);
+    const router = useRouter();
 
     const handleCardSelect = (level: any) => {
         setSelectedCard(level);
     };
+
+    const handleStart = () => {
+        if (selectedCard) {
+            router.push(`/questions/${selectedCard.toLowerCase()}`);
+        }
+    }
 
     if (!show) return null;
 
@@ -77,6 +85,7 @@ const ModalCourse: React.FC<ModalCourseProps> = ({id, name, description, show, o
                             <button
                                 className="btn modal-button mt-4 fs-4"
                                 disabled={!selectedCard}
+                                onClick={handleStart}
                             >
                                 Start
                             </button>

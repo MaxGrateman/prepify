@@ -6,12 +6,11 @@ import {AppDispatch, RootState} from "@/lib/store";
 import {useEffect, useState} from "react";
 import {fetchCourses} from "@/lib/features/courses/coursSlice";
 import ModalCourse from "@/widgets/components/modalCourse";
-import Cookies from "js-cookie";
 
 interface Course {
     id: number,
     name: string | null,
-    description: string,
+    description: string | null,
 }
 
 export default function Courses() {
@@ -98,7 +97,7 @@ export default function Courses() {
                     {selectedCourse && (
                         <ModalCourse id={selectedCourse.id}
                                      name={selectedCourse.name}
-                                     description={selectedCourse.description}
+                                     description={selectedCourse.description ?? 'No description'}
                                      show={showModal}
                                      onClose={handleCloseModal}/>
                     )}
