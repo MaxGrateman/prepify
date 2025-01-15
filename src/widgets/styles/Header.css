@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .container {
     --bs-gutter-x: 1.5rem;
     --bs-gutter-y: 0;
@@ -7,3 +11,4 @@
     margin-right: auto;
     margin-left: auto;
 }
+

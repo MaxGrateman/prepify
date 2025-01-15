@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../shared/styles/globals.css";
-import  "bootstrap/dist/css/bootstrap.min.css";
 import Header from '@/widgets/components/Header'
 import './../shared/styles/Utilities.css'
 import StoreProvider from './StoreProvider';
@@ -20,6 +19,11 @@ export default function RootLayout({
   return (
       <StoreProvider>
           <html lang="en">
+              <head>
+                <link rel="preconnect" href="https://fonts.googleapis.com"/>
+                <link rel="preconnect" href="https://fonts.gstatic.com"/>
+                <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet"/>
+              </head>
               <body className={inter.className}>
                   {/* Main layout components */}
                   <Header />

@@ -10,6 +10,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "@/lib/store";
 import HeaderDropdown from "@/widgets/components/HeaderDropdown";
 
+import { RiInstagramLine } from "react-icons/ri";
+import { FaLinkedin } from "react-icons/fa6";
+import { FaTelegramPlane } from "react-icons/fa";
+
 function Header() {
     const router = useRouter();
     const dispatch:AppDispatch = useDispatch();
@@ -27,51 +31,77 @@ function Header() {
     }
 
     return (
-        <header className="p-2 text-bg-dark">
-            <div className="container">
-                <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-2">
-                    <p className="fs-3 p-1 col-md-2 mb-2 mb-md-0 pointer-cursor">Prepify</p>
-                    <nav className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                        <Link className="text-white nav-link px-2" href="/">
-                            Home
-                        </Link>
-                        <Link className="text-white nav-link px-2" href="/courses">
-                            Courses
-                        </Link>
-                    </nav>
-                    <div className="d-flex justify-content-center align-items-center text-end col col-lg-auto mb-2 mb-md-0" style={{ minHeight: '50px' }}>
-                        {!user ? (
-                            <>
-                                <Link href="/login">
-                                    <button type="button" className="btn btn-outline-light me-2">Login</button>
-                                </Link>
-                                <Link href="/register">
-                                    <button type="button" className="btn btn-success">Sign-up</button>
-                                </Link>
-                            </>
-                        ) : (
-                            !loading && user?.image_path ? (
-                                <HeaderDropdown user_image={
-                                    <img
-                                        src={user.image_path || '/hq720.jpg'}
-                                        alt="Avatar"
-                                        width={50}
-                                        height={50}
-                                        className="rounded-circle"
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                } userId={user.id}>
-                                    <Link href="/" onClick={handleLogout} className="text-decoration-none text-reset">Log out</Link>
-                                </HeaderDropdown>
-                            ) : (
-                                <div className="spinner-border" role="status">
-                                    <span className="visually-hidden">Загрузка...</span>
-                                </div>
-                            )
-                        )}
-                    </div>
+        <header className="bg-transparent fixed w-full z-10 ">
+            <nav className="flex items-center justify-between w=[80%] p-2 border-b-2 border-white mx-5">
+                <div className='flex items-center justify-between w-96'>
+                    <Link href="/">
+                        <p className="text-white font-bold text-3xl cursor-pointer">Prepify</p>
+                    </Link>
+                    <Link href="/courses" className="relative transition-all ease-in-out before:transition-[width] before:ease-in-out before:duration-400 before:absolute before:bg-white 
+                                                    before:origin-center before:h-[2px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%] after:transition-[width] after:ease-in-out after:duration-400 after:absolute
+                                                     after:bg-white after:origin-center after:h-[2px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%] text-base">
+                        <span>COURSES</span>
+                    </Link>
                 </div>
-            </div>
+                <ul className="flex items-center space-x-6 text-white">
+                    <Link href="/about" className="relative transition-all ease-in-out before:transition-[width] before:ease-in-out before:duration-400 before:absolute before:bg-white 
+                                                    before:origin-center before:h-[2px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%] after:transition-[width] after:ease-in-out after:duration-400 after:absolute
+                                                     after:bg-white after:origin-center after:h-[2px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%] text-base">
+                        <span>ABOUT US</span>
+                    </Link>
+                    <Link href="/contacts" className="relative transition-all ease-in-out before:transition-[width] before:ease-in-out before:duration-400 before:absolute before:bg-white 
+                                                    before:origin-center before:h-[2px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%] after:transition-[width] after:ease-in-out after:duration-400 after:absolute
+                                                     after:bg-white after:origin-center after:h-[2px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%] text-base">
+                        <span>CONTACT</span>
+                    </Link>
+                    <Link href="/support" className="relative transition-all ease-in-out before:transition-[width] before:ease-in-out before:duration-400 before:absolute before:bg-white 
+                                                    before:origin-center before:h-[2px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%] after:transition-[width] after:ease-in-out after:duration-400 after:absolute
+                                                     after:bg-white after:origin-center after:h-[2px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%] text-base">
+                        <span>SUPPORT</span>
+                    </Link>
+                </ul>
+
+                <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-3 mr-16">
+                        <a href="#instagram" className=" text-white hover:text-gray-300"><RiInstagramLine size={25}/></a>
+                        <a href="#linkedin" className="text-white hover:text-gray-300"><FaLinkedin size={25}/></a>
+                        <a href="#telegram" className="text-white hover:text-gray-300"><FaTelegramPlane size={25}/></a>
+                    </div>
+                    {!user ? (
+                             <>
+                                 <Link href="/login">
+                                    <button type="button" className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                                        Login
+                                    </button>
+                                </Link>
+                                 <Link href="/register">
+                                    <button type="button" className="text-gray-900 bg-white focus:outline-none hover:bg-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700 dark:focus:ring-gray-700">
+                                        Sign in
+                                    </button>
+                                 </Link>
+                             </>
+                         ) : (
+                             !loading && user?.image_path ? (
+                                 <HeaderDropdown user_image={
+                                     <img
+                                         src={user.image_path || '/hq720.jpg'}
+                                         alt="Avatar"
+                                         width={50}
+                                         height={50}
+                                         className="rounded-circle"
+                                         style={{ objectFit: 'cover' }}
+                                     />
+                                 } userId={user.id}>
+                                     <Link href="/" onClick={handleLogout} className="text-decoration-none text-reset">Log out</Link>
+                                 </HeaderDropdown>
+                             ) : (
+                                 <div className="spinner-border" role="status">
+                                     <span className="visually-hidden">Загрузка...</span>
+                                 </div>
+                             )
+                         )}
+                </div>
+            </nav>
         </header>
     );
 }
