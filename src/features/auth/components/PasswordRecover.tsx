@@ -40,49 +40,28 @@ function PasswordRecover() {
     };
 
     return (
-        <section className="vh-90">
-            <div className="container py-5 h-100">
-                <div className="row justify-content-center align-items-center h-100">
-                    <div className="col-12 col-lg-9 col-xl-7">
-                        <div className="card shadow-2-strong card-registration" style={{ borderRadius: "15px" }}>
-                            <div className="card-body p-4 p-md-5">
-                                <h3 className="mb-4 pb-2 pb-md-0 mb-md-5">Password Recovery</h3>
-                                <form onSubmit={handleSubmit}>
-                                    <div className="row">
-                                        <div className="col-md-6 mb-4 d-flex align-items-center">
-                                            <div data-mdb-input-init className="form-floating mb-3">
-                                                <input
-                                                    type="email"
-                                                    id="email"
-                                                    placeholder="E-mail"
-                                                    className="form-control form-control-lg"
-                                                    value={formData.email}
-                                                    onChange={handleChange}
-                                                    required
-                                                />
-                                                <label className="form-label" htmlFor="email">E-mail</label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {error && <p style={{ color: 'red' }}>{error}</p>}
-                                    {success && <p style={{ color: 'green' }}>{success}</p>}
-
-                                    <div className="mt-4 pt-2">
-                                        <input
-                                            data-mdb-ripple-init
-                                            className="btn btn-primary btn-lg"
-                                            type="submit"
-                                            value="Send"
-                                        />
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+        <section className="mt-48">
+            <form className="max-w-md mx-auto border border-neutral-100 shadow-lg shadow-neutral-100/50 rounded-md box-border px-8 py-6">
+                <h3 className="mb-6 text-xl">PASSWORD RECOVERY</h3>
+                <div className="relative z-0 w-full mb-5 group">
+                    <input type="email" 
+                        name="email" 
+                        id="email" 
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer" 
+                        placeholder=" " 
+                        required
+                        autoComplete="new-email" 
+                        value={formData.email}
+                        onChange={handleChange} />
+                    <label htmlFor="email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
+                
+                    <button type="submit" 
+                            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 mt-10 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        Send
+                    </button>
                 </div>
-            </div>
-        </section>
+            </form>
+        </section>    
     );
 }
 
