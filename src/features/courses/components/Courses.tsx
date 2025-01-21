@@ -124,7 +124,22 @@ export default function Courses() {
                                 placeholder="Find your course..."
                                 autoComplete="new-email" 
                                 required />
-                        
+                        {courses.map((course) => (
+                        <div className="col-sm-3 pt-4" key={course.id}>
+                            <div className="card">
+                                <div className="card-body">
+                                    <h5 className="card-title">{course.name ?? 'Default name'}</h5>
+                                    <h5 className="card-title">{course.description ?? 'Default name'}</h5>
+                                    <button type="button"
+                                            className="btn btn-dark mt-5"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop"
+                                            onClick={() => handleButtonClick(course)}
+                                            >Start</button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                     </div>
                 </form>
             </div>

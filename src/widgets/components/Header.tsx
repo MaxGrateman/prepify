@@ -20,6 +20,9 @@ function Header() {
     const dispatch:AppDispatch = useDispatch();
     const { user, loading } = useSelector((state: RootState) => state.user);
 
+    const { scrollYProgress } = useScroll()
+    
+
     useEffect(() => {
         const token = Cookies.get('token');
         if (token) {

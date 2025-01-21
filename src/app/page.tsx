@@ -10,7 +10,7 @@ export default function Home() {
     <div className="relative h-screen text-left w-screen">
       <AnimatePresence>
         <motion.h1
-          className="absolute text-7xl bottom-12 left-5 flex items-center cursor-pointer"
+          className="absolute text-7xl bottom-14 left-5 flex items-center cursor-pointer"
           initial={{ y: 10, opacity: 0}}
           animate={{ y: 0, opacity: 1}}
           exit={{ y: -10, opacity: 0 }}
