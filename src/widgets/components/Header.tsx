@@ -2,7 +2,7 @@
 
 import '../styles/Header.css';
 import Link from 'next/link';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import { useRouter } from 'next/navigation';
 import {fetchUserData, logout} from "@/lib/features/profile/userSlice";
 import Cookies from "js-cookie";
@@ -13,6 +13,7 @@ import HeaderDropdown from "@/widgets/components/HeaderDropdown";
 import { RiInstagramLine } from "react-icons/ri";
 import { FaLinkedin } from "react-icons/fa6";
 import { FaTelegramPlane } from "react-icons/fa";
+import { useMotionValueEvent, useScroll } from 'motion/react';
 
 function Header() {
     const router = useRouter();
@@ -31,7 +32,9 @@ function Header() {
     }
 
     return (
-        <header className="bg-transparent fixed w-full z-10 ">
+        <div
+            className="sticky top-0 bg-transparent w-full z-50 transition-all duration-1000"
+        >
             <nav className="flex items-center justify-between w=[80%] p-2 border-b border-white mx-5">
                 <div className='flex items-center justify-between w-96'>
                     <Link href="/">
@@ -102,7 +105,7 @@ function Header() {
                          )}
                 </div>
             </nav>
-        </header>
+        </div>
     );
 }
 

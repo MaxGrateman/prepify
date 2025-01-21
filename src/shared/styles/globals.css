@@ -20,6 +20,8 @@ body {
   background-color: #121111 !important;
   font-family: "VK Sans Display Regular" !important;
   font-optical-sizing: auto;
+  position: relative;
+  height: 100vh;
 }
 
 p {

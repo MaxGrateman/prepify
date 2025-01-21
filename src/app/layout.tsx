@@ -4,6 +4,7 @@ import "../shared/styles/globals.css";
 import Header from '@/widgets/components/Header'
 import './../shared/styles/Utilities.css'
 import StoreProvider from './StoreProvider';
+import GlobalWrapper from "./GlobalWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,10 +28,7 @@ export default function RootLayout({
               </head>
               <body className={inter.className}>
                   {/* Main layout components */}
-                  <Header />
-                  <div>
-                      {children}
-                  </div>
+                  <GlobalWrapper>{children}</GlobalWrapper>
               </body>
           </html>
       </StoreProvider>
