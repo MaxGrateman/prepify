@@ -13,15 +13,12 @@ import HeaderDropdown from "@/widgets/components/HeaderDropdown";
 import { RiInstagramLine } from "react-icons/ri";
 import { FaLinkedin } from "react-icons/fa6";
 import { FaTelegramPlane } from "react-icons/fa";
-import { useMotionValueEvent, useScroll } from 'motion/react';
+import { motion, useMotionValueEvent, useScroll } from 'motion/react';
 
 function Header() {
     const router = useRouter();
     const dispatch:AppDispatch = useDispatch();
     const { user, loading } = useSelector((state: RootState) => state.user);
-
-    const { scrollYProgress } = useScroll()
-    
 
     useEffect(() => {
         const token = Cookies.get('token');
@@ -36,7 +33,7 @@ function Header() {
 
     return (
         <div
-            className="sticky top-0 bg-transparent w-full z-50 transition-all duration-1000"
+            className="sticky top-0 bg-transparent w-full z-50"
         >
             <nav className="flex items-center justify-between w=[80%] p-2 border-b border-white mx-5">
                 <div className='flex items-center justify-between w-96'>
@@ -48,7 +45,7 @@ function Header() {
                     <Link href="/courses" className="relative transition-all ease-in-out before:transition-[width] before:ease-in-out before:duration-200 before:absolute before:bg-white 
                                                     before:origin-center before:h-[1px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%] after:transition-[width] after:ease-in-out after:duration-200 after:absolute
                                                      after:bg-white after:origin-center after:h-[1px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%] text-base">
-                        <span>COURSESS</span>
+                        <span>COURSES</span>
                     </Link>
 
                     <Link href="#" className="relative transition-all ease-in-out before:transition-[width] before:ease-in-out before:duration-200 before:absolute before:bg-white 

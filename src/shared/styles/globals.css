@@ -19,6 +19,7 @@ body {
   overflow-x: hidden;
   background-color: #121111 !important;
   font-family: "VK Sans Display Regular" !important;
+  @apply font-custom !important;
   font-optical-sizing: auto;
   position: relative;
   height: 100vh;
@@ -36,6 +37,14 @@ a {
 
 i {
   z-index: 100;
+}
+
+@font-face {
+  font-family: 'VKSansDisplay-Medium';
+  src: url('./../../public/fonts/vk-sans-display-medium.ttf') format('ttf'),
+       url('/fonts/YourFontFile.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
 

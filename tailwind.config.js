@@ -6,7 +6,11 @@ module.exports = {
     './src/**/*.{html,js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        custom: ['VKSansDisplay-Medium', 'sans-serif'],
+      },
+    },
   },
   plugins: [
     require('@tailwindcss/forms'),
