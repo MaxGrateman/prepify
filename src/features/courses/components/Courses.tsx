@@ -1,6 +1,6 @@
 'use client'
 
-import {useRouter, useSearchParams} from "next/navigation";
+import {useRouter} from "next/navigation";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "@/lib/store";
 import {useEffect, useState} from "react";
@@ -15,7 +15,6 @@ interface Course {
 
 export default function Courses() {
     const dispatch = useDispatch<AppDispatch>();
-    const searchParams = useSearchParams();
 
     const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
     const [showModal, setShowModal] = useState(false);
