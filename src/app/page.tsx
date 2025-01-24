@@ -5,10 +5,11 @@ import "./page.css";
 import { LuArrowUpRight } from "react-icons/lu";
 import Footer from "@/widgets/components/Footer";
 import React from "react";
+import Link from 'next/link';
 
 const text = "PREPARE WITH PREPIFY";
 
-const transition = { duration: 0.8, ease: [.25,.1,.25,1] };
+const transition = { duration: 1, ease: [.25,.1,.25,1] };
 const variants = {
   hidden: { filter: "blur(10px)", transform: "translateY(20%)", opacity: 0 },
   visible: { filter: "blur(0)", transform: "translateY(0)", opacity: 1 },
@@ -36,31 +37,21 @@ export default function Home() {
               {index < words.length - 1 && ' '}
             </React.Fragment>
           ))}
-          {/* <motion.span
-                  variants={{
-                    hover: { scale: 1.2, transition: { duration: 0.3 } },
-                  }}
-                  whileTap={{ scale: 0.3 }}
-                >
-                  <LuArrowUpRight size={92} />
-          </motion.span> */}
           </h1>
-          
-          
         </motion.div>
     </div>
 
     {/*Первая секция*/}
     <motion.div initial="hidden" whileInView="visible" className="mt-48 mx-5 w-[50%] flex flex-col">
-          <motion.h5 transition={transition} variants={variants} className="mb-12 italic text-lg text-blue-600">.about us</motion.h5>
-          <motion.p transition={transition} variants={variants} className=" text-2xl tracking-wide">PREPIFY IS A QUICK RELIABLE WAY TO PREPARE AS MUCH AS POSSBILE
-            FOR YOUR UPCOMING INTERVIEW. WE SUGGEST YOU WIDE RANGE OF TESTS
-            OF ALL POSSIBLE QUESTIONS. REGISTER NOW TO TRY </motion.p>
-            <motion.button transition={transition} variants={variants} className="transition ease-in-out duration-300 mt-5 italic text-2xl self-end font-semibold
-                    text-white bg-primary-black border-2 border-white hover:bg-white hover:text-black focus:outline-none focus:ring-1 focus:ring-white
-                    rounded-3xl px-8 me-4 mb-4 shadow-md shadow-neutral-100/50">
-            CLICK
-          </motion.button>
+        <motion.h5 transition={transition} variants={variants} className="mb-12 italic text-lg text-blue-600">.about us</motion.h5>
+        <motion.p transition={transition} variants={variants} className=" text-2xl tracking-wide">PREPIFY IS A QUICK RELIABLE WAY TO PREPARE AS MUCH AS POSSBILE
+          FOR YOUR UPCOMING INTERVIEW. WE SUGGEST YOU WIDE RANGE OF TESTS
+          OF ALL POSSIBLE QUESTIONS. REGISTER NOW TO TRY </motion.p>
+        <motion.button transition={transition} variants={variants} className="transition ease-in-out duration-300 mt-5 italic text-2xl self-end font-semibold
+                  text-white bg-primary-black border-2 border-white hover:bg-white hover:text-black focus:outline-none focus:ring-1 focus:ring-white
+                  rounded-3xl px-8 me-4 mb-4 shadow-md shadow-neutral-100/50">
+          <Link href="/courses"><span>CLICK</span></Link>
+        </motion.button>
     </motion.div>
 
     {/*Вторая секция*/}
