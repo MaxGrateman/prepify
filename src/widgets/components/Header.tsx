@@ -33,7 +33,7 @@ function Header() {
 
     return (
         <div
-            className="sticky top-0 bg-transparent w-full z-50"
+            className="bg-transparent w-full z-50"
         >
             <nav className="flex items-center justify-between w=[80%] p-2 border-b border-white mx-5">
                 <div className='flex items-center justify-between w-96'>

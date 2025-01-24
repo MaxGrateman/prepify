@@ -41,8 +41,7 @@ i {
 
 @font-face {
   font-family: 'VKSansDisplay-Medium';
-  src: url('./../../public/fonts/vk-sans-display-medium.ttf') format('ttf'),
-       url('/fonts/YourFontFile.woff') format('woff');
+  src: url('./../../public/fonts/vk-sans-display-medium.ttf') format('ttf');
   font-weight: normal;
   font-style: normal;
 }
