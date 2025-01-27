@@ -11,7 +11,7 @@ const text = "PREPARE WITH PREPIFY";
 
 const transition = { duration: 1, ease: [.25,.1,.25,1] };
 const variants = {
-  hidden: { filter: "blur(10px)", transform: "translateY(20%)", opacity: 0 },
+  hidden: { filter: "blur(10px)", transform: "translateY(15%)", opacity: 0 },
   visible: { filter: "blur(0)", transform: "translateY(0)", opacity: 1 },
 };
 
@@ -50,7 +50,7 @@ export default function Home() {
         <motion.button transition={transition} variants={variants} className="transition ease-in-out duration-300 mt-5 italic text-2xl self-end font-semibold
                   text-white bg-primary-black border-2 border-white hover:bg-white hover:text-black focus:outline-none focus:ring-1 focus:ring-white
                   rounded-3xl px-8 me-4 mb-4 shadow-md shadow-neutral-100/50">
-          <Link href="/courses"><span>CLICK</span></Link>
+          <Link href="/about"><span>CLICK</span></Link>
         </motion.button>
     </motion.div>
 

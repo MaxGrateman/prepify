@@ -3,7 +3,7 @@
 import {useRouter} from "next/navigation";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "@/lib/store";
-import {useEffect, useState} from "react";
+import {SetStateAction, useEffect, useState} from "react";
 import {fetchCourses} from "@/lib/features/courses/coursSlice";
 import ModalCourse from "@/widgets/components/modalCourse";
 import { motion } from "motion/react";
@@ -19,6 +19,10 @@ export default function Courses() {
     const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
     const [showModal, setShowModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [hoveredId, setHoveredId] = useState<number | null>(null);
+
+    const handleMouseEnter = (id: number) => setHoveredId(id);
+    const handleMouseLeave = () => setHoveredId(null);
 
     const user = useSelector((state: RootState) => state.user);
     const {courses, loading, error} = useSelector((state: RootState) => state.courses);
@@ -46,11 +50,6 @@ export default function Courses() {
             setShowModal(true);
         }
     }
-
-    function handleSearch(term: string) {
-
-    }
-
 
     return(
         // <div className="pt-5 my-2 text-start" style={{ paddingLeft: '310px', paddingRight: '310px' }}>
@@ -129,13 +128,27 @@ export default function Courses() {
                     <h2 className="text-2xl">FILTERS</h2>
                 </div>
                 <div className="basis-2/3 grid grid-cols-3 gap-4 place-items-start">
-                    {courses.map((course) => (
-                        <motion.div whileHover={{ scale: 1.1}}
-                                    whileTap={{ scale: 0.9 }} 
-                                    className="max-w-sm box-border p-8 border-neutral-100 shadow-sm shadow-neutral-100/50 border rounded-lg ">
-                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{course.name ?? 'Default name'}</h5>
-                            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{course.description ?? 'Default name'}</p>
-                            <button className="inline-flex items-center mt-4 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg 
+                    {courses.map((course, index) => (
+                        <motion.div
+                        key={course.id}
+                        className="w-full h-auto box-border p-8 border-neutral-100 shadow-sm shadow-neutral-100/50 border rounded-lg"
+                        initial={false}
+                        animate={{
+                            scale: hoveredId === course.id ? 1.05 : hoveredId ? 0.95 : 1,
+                            x:
+                            hoveredId === course.id
+                                ? 0
+                                : hoveredId !== null
+                                ? Math.sign(index - courses.findIndex((c) => c.id === hoveredId)) * 5
+                                : 0,
+                        }}
+                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                        onMouseEnter={() => handleMouseEnter(course.id)}
+                        onMouseLeave={handleMouseLeave}
+                        >
+                        <h5 className="text-lg font-bold">{course.name ?? "Default name"}</h5>
+                        <p className="text-sm text-gray-700">{course.description ?? "Default description"}</p>
+                        <button className="inline-flex items-center mt-4 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg 
                                         hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                     onClick={() => handleButtonClick(course)}
                                 >
@@ -143,7 +156,7 @@ export default function Courses() {
                                 <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
                                 </svg>
-                            </button>
+                        </button>
                         </motion.div>
                     ))}
                 </div>
