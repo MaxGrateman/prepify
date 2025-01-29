@@ -7,6 +7,8 @@ import {SetStateAction, useEffect, useState} from "react";
 import {fetchCourses} from "@/lib/features/courses/coursSlice";
 import ModalCourse from "@/widgets/components/modalCourse";
 import { motion } from "motion/react";
+import { CgSpinnerTwo, CgSpinnerTwoAlt } from "react-icons/cg";
+import Loading from "@/widgets/components/Loading";
 interface Course {
     id: number,
     name: string | null,
@@ -128,6 +130,8 @@ export default function Courses() {
                     <h2 className="text-2xl">FILTERS</h2>
                 </div>
                 <div className="basis-2/3 grid grid-cols-3 gap-4 place-items-start">
+                    {loading && <Loading/>}
+
                     {courses.map((course, index) => (
                         <motion.div
                         key={course.id}

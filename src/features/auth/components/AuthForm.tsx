@@ -87,136 +87,6 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
 
 
     return(
-        // <section className="vh-90">
-        //     <div className="container py-5 h-100">
-        //         <div className="row justify-content-center align-items-center h-100">
-        //             <div className="col-12 col-lg-9 col-xl-7">
-        //                 <div className="card shadow-2-strong card-registration" style={{borderRadius: "15px"}}>
-        //                     <div className="card-body p-4 p-md-5">
-        //                         <h3 className="mb-4 pb-2 pb-md-0 mb-md-5">{isRegister ? 'Registration Form' : 'Login'}</h3>
-        //                         <form onSubmit={handleSubmit} className="needs-validation">
-        //                             {isRegister && (
-        //                                 <div className="row">
-        //                                     <div className="col mb-4">
-
-        //                                         <div data-mdb-input-init className="form-floating mb-3">
-        //                                             <input type="text"
-        //                                                    name="name"
-        //                                                    id="name"
-        //                                                    required
-        //                                                    placeholder="Username"
-        //                                                    className="form-control form-control-lg"
-        //                                                    value={formData.name}
-        //                                                    onChange={handleChange}
-        //                                             />
-        //                                             <label className="form-label" htmlFor="username">Username</label>
-
-        //                                         </div>
-
-        //                                     </div>
-        //                                 </div>
-        //                             )}
-
-        //                             <div className="row">
-        //                                 <div className="col mb-4">
-        //                                     <div data-mdb-input-init className="form-floating mb-3">
-        //                                         <input type="email"
-        //                                                id="email"
-        //                                                name="email"
-        //                                                required
-        //                                                placeholder="E-mail"
-        //                                                className="form-control form-control-lg"
-        //                                                value={formData.email}
-        //                                                onChange={handleChange}
-        //                                         />
-        //                                         <label className="form-label" htmlFor="email">E-mail</label>
-        //                                     </div>
-        //                                 </div>
-        //                             </div>
-
-        //                             <div className="row">
-        //                                 <div className="col mb-4 pb-2">
-        //                                     <div data-mdb-input-init className="form-floating mb-3">
-        //                                         <input type={passwordVisible ? "text" : "password"}
-        //                                                id="password"
-        //                                                name='password'
-        //                                                required
-        //                                                placeholder="Password"
-        //                                                className="form-control form-control-lg"
-        //                                                value={formData.password}
-        //                                                onChange={handleChange}
-        //                                         />
-        //                                         <label className="form-label" htmlFor="password">Password</label>
-        //                                         <span
-        //                                             className="position-absolute top-50 end-0 translate-middle-y me-3"
-        //                                             onClick={togglePasswordVisibility}
-        //                                             style={{ cursor: 'pointer' }}
-        //                                         >
-        //                                             <i className={passwordVisible ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'}></i>
-        //                                         </span>
-        //                                     </div>
-
-        //                                 </div>
-        //                             </div>
-
-        //                             {isRegister && (
-        //                             <div className="row">
-        //                                 <div className="col mb-4 pb-2">
-
-        //                                     <div className="form-floating">
-        //                                         <input type={passwordVisible ? "text" : "password"}
-        //                                                placeholder="Password Confirmation"
-        //                                                id="password_confirmation"
-        //                                                name='passwordConfirmation'
-        //                                                required
-        //                                                className="form-control form-control-lg"
-        //                                                value={formData.password_confirmation}
-        //                                                onChange={handleChange}
-        //                                         />
-        //                                         <span
-        //                                             className="position-absolute top-50 end-0 translate-middle-y me-3 "
-        //                                             onClick={togglePasswordVisibility}
-        //                                             style={{ cursor: 'pointer' }}
-        //                                         >
-        //                                             <i className={passwordVisible ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'}></i>
-        //                                         </span>
-        //                                         <label className="form-label" htmlFor="password_confirmation">Password Confirmation</label>
-        //                                     </div>
-
-        //                                 </div>
-        //                             </div>
-        //                             )}
-
-        //                             {!isRegister && (
-        //                                 <div className="row">
-        //                                     <div className="col-md-4">
-        //                                         <Link className={`text-blue nav-link px-2 ${pathname === '/' ? 'active' : ''}`} href="/passwordRecover">
-        //                                             Forgot password?
-        //                                         </Link>
-        //                                     </div>
-        //                                 </div>
-        //                             )}
-
-        //                             {/*Вывод ошибок и удачных уведомлений*/}
-        //                             {error && <div className="alert alert-danger mt-2" role="alert">{error}</div>}
-        //                             {success && <p style={{ color: 'green' }}>{success}</p>}
-
-        //                             <div className="mt-4 pt-2">
-        //                                 <input data-mdb-ripple-init
-        //                                        className="btn btn-primary btn-lg w-100"
-        //                                        type="submit"
-        //                                        value={isRegister ? 'Register' : 'Login'}
-        //                                 />
-        //                             </div>
-
-        //                         </form>
-        //                     </div>
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     </div>
-        // </section>
-
         <section className="mt-48">
             <form onSubmit={handleSubmit} className="max-w-md mx-auto border border-neutral-100 shadow-md shadow-neutral-100/50 rounded-md box-border p-8">
                 <h3 className="mb-6 text-xl">{isRegister ? 'REGISTRATION' : 'LOGIN'}</h3>
@@ -239,6 +109,7 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
 
                 <div className="relative z-0 w-full mb-5 group">
                     <input type="email" 
+                    
                         name="email" 
                         id="email" 
                         className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer" 

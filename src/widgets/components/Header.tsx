@@ -9,11 +9,13 @@ import Cookies from "js-cookie";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "@/lib/store";
 import HeaderDropdown from "@/widgets/components/HeaderDropdown";
+import { CgSpinnerTwoAlt } from "react-icons/cg";
+import { CgSpinnerTwo } from "react-icons/cg";
 
 import { RiInstagramLine } from "react-icons/ri";
 import { FaLinkedin } from "react-icons/fa6";
 import { FaTelegramPlane } from "react-icons/fa";
-import { motion, useMotionValueEvent, useScroll } from 'motion/react';
+import Loading from './Loading';
 
 function Header() {
     const router = useRouter();
@@ -35,13 +37,13 @@ function Header() {
         <div
             className="bg-transparent w-full z-50"
         >
-            <nav className="flex items-center justify-between w=[80%] p-2 border-b border-white mx-5">
+            <nav className="grid grid-cols-3 w=[80%] p-2 border-b border-white mx-5">
                 <div className='flex items-center justify-between w-96'>
                     <Link href="/">
                         <p className="text-white font-bold text-3xl cursor-pointer">Prepify</p>
                     </Link>
                 </div>
-                <ul className="flex items-center space-x-6 text-white">
+                <ul className='flex items-center justify-center space-x-6 text-white'>
                     <Link href="/courses" className="relative transition-all ease-in-out before:transition-[width] before:ease-in-out before:duration-200 before:absolute before:bg-white 
                                                     before:origin-center before:h-[1px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%] after:transition-[width] after:ease-in-out after:duration-200 after:absolute
                                                      after:bg-white after:origin-center after:h-[1px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%] text-base">
@@ -67,7 +69,7 @@ function Header() {
                     </Link>
                 </ul>
 
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center justify-end space-x-2">
                     <div className="flex items-center space-x-3 mr-16">
                         <a href="#instagram" className=" text-white hover:text-gray-300"><RiInstagramLine size={25}/></a>
                         <a href="#linkedin" className="text-white hover:text-gray-300"><FaLinkedin size={25}/></a>
@@ -88,22 +90,13 @@ function Header() {
                              </>
                          ) : (
                              !loading && user?.image_path ? (
-                                 <HeaderDropdown user_image={
-                                     <img
-                                         src={user.image_path || '/hq720.jpg'}
-                                         alt="Avatar"
-                                         width={50}
-                                         height={50}
-                                         className="rounded-circle"
-                                         style={{ objectFit: 'cover' }}
-                                     />
-                                 } userId={user.id}>
-                                     <Link href="/" onClick={handleLogout} className="text-decoration-none text-reset">Log out</Link>
-                                 </HeaderDropdown>
+                                <HeaderDropdown user_image={user.image_path} userId={user.id}>
+                                    <Link href="/" onClick={handleLogout} className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                        Log out
+                                    </Link>
+                                </HeaderDropdown>
                              ) : (
-                                 <div className="spinner-border" role="status">
-                                     <span className="visually-hidden">Загрузка...</span>
-                                 </div>
+                                <Loading/>
                              )
                          )}
                 </div>
