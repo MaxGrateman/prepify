@@ -68,7 +68,7 @@ const CoursePage: React.FC<{level: string}> = ({ level }) => {
     if (error) return <p>{error}</p>;
 
     return (
-        <div className="pt-5 my-2 text-center">
+        <div className="pt-5 my-2 text-center text-white">
             <h1>{level} Questions</h1>
             {currentQuestion && (
                 <div className="mt-4">

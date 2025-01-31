@@ -7,7 +7,6 @@ import {SetStateAction, useEffect, useState} from "react";
 import {fetchCourses} from "@/lib/features/courses/coursSlice";
 import ModalCourse from "@/widgets/components/modalCourse";
 import { motion } from "motion/react";
-import { CgSpinnerTwo, CgSpinnerTwoAlt } from "react-icons/cg";
 import Loading from "@/widgets/components/Loading";
 interface Course {
     id: number,
@@ -36,75 +35,26 @@ export default function Courses() {
 
     const handleCloseModal = () => {
         setShowModal(false);
+        setSelectedCourse(null); 
     }
 
     const handleButtonClick = (course: Course) => {
         if (!user.user) {
             setErrorMessage('Please, log in to continue');
             setShowModal(false);
-
-            router.push('/login')
+            router.push('/login');
         } else {
             setSelectedCourse({
                 ...course,
                 name: course.name || 'No name available',
             });
             setShowModal(true);
+            console.log("Selected Course:", course);
+            console.log("Show Modal:", showModal);
         }
-    }
+    };
 
     return(
-        // <div className="pt-5 my-2 text-start" style={{ paddingLeft: '310px', paddingRight: '310px' }}>
-        //     <div className="row justify-content-start">
-        //         <h1 className="display-6 fw-bold mb-3">Courses</h1>
-
-        //         {/* Search bar */}
-        //         <div className="input-group rounded">
-        //             <input type="search"
-        //                    className="form-control rounded"
-        //                    placeholder="Start typing to filter"
-        //                    aria-label="Search"
-        //                    aria-describedby="search-addon"
-        //                    onChange = {(e) => { handleSearch(e.target.value)}}
-        //             />
-        //         </div>
-
-        //         <div className="row justify-content-start mt-4">
-        //             {loading && <div className="d-flex justify-content-center align-items-center vh-100">
-        //                 <div className="spinner-border" style={{width: '5rem', height: '5rem'}} role="status">
-        //                     <span className="visually-hidden">Loading...</span>
-        //                 </div>
-        //             </div>}
-
-        //             {error && <p>Error: {error}</p>}
-
-        //             {courses.map((course) => (
-        //                 <div className="col-sm-3 pt-4" key={course.id}>
-        //                     <div className="card">
-        //                         <div className="card-body">
-        //                             <h5 className="card-title">{course.name ?? 'Default name'}</h5>
-        //                             <button type="button"
-        //                                     className="btn btn-dark mt-5"
-        //                                     data-bs-toggle="modal"
-        //                                     data-bs-target="#staticBackdrop"
-        //                                     onClick={() => handleButtonClick(course)}
-        //                                     >Start</button>
-        //                         </div>
-        //                     </div>
-        //                 </div>
-        //             ))}
-
-        //             {selectedCourse && (
-        //                 <ModalCourse id={selectedCourse.id}
-        //                              name={selectedCourse.name}
-        //                              description={selectedCourse.description ?? 'No description'}
-        //                              show={showModal}
-        //                              onClose={handleCloseModal}/>
-        //             )}
-        //         </div>
-        //     </div>
-        // </div>
-
         <section className="mt-10 px-8">
             <div className="flex items-start flex-wrap gap-5">
                 <h1 className="text-3xl basis-1/6"><span className="text-5xl text-blue-600">.</span>COURSES</h1>
@@ -151,9 +101,10 @@ export default function Courses() {
                         onMouseLeave={handleMouseLeave}
                         >
                         <h5 className="text-lg font-bold">{course.name ?? "Default name"}</h5>
-                        <p className="text-sm text-gray-700">{course.description ?? "Default description"}</p>
+                        <p className="text-sm font-semibold text-gray-700">{course.description ?? "Default description"}</p>
                         <button className="inline-flex items-center mt-4 px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg 
                                         hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                    type="button"
                                     onClick={() => handleButtonClick(course)}
                                 >
                                 Start
@@ -164,6 +115,13 @@ export default function Courses() {
                         </motion.div>
                     ))}
                 </div>
+                {selectedCourse && (
+                        <ModalCourse id={selectedCourse.id}
+                                     name={selectedCourse.name}
+                                     description={selectedCourse.description ?? 'No description'}
+                                     show={showModal}
+                                     onClose={handleCloseModal}/>
+                    )}
             </div>
         </section>
     )
