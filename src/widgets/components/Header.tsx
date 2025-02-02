@@ -95,10 +95,10 @@ function Header() {
                                         Log out
                                     </Link>
                                 </HeaderDropdown>
-                             ) : (
-                                <Loading/>
-                             )
-                         )}
+                        ) : (
+                            <span></span>
+                        )
+                    )}
                 </div>
             </nav>
         </div>

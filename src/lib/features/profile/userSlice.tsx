@@ -2,6 +2,7 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import {apiProfile} from "@/features/profile/api/apiUrlProfile";
 import axios from "axios";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 
 export interface UserProfile {
@@ -11,7 +12,7 @@ export interface UserProfile {
     email: string;
     email_verified_at: string | null;
     id: number;
-    image_path: string | undefined;
+    image_path: string;
     level: string | null;
     name: string;
     place_of_work: string | null;

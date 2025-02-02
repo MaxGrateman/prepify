@@ -80,7 +80,20 @@ export default function Courses() {
                     <h2 className="text-2xl">FILTERS</h2>
                 </div>
                 <div className="basis-2/3 grid grid-cols-3 gap-4 place-items-start">
-                    {loading && <Loading/>}
+                {loading &&
+                Array.from({ length: 12 }).map((_, index) => (
+                    <div
+                        key={index}
+                        className="flex flex-col items-start justify-center w-full h-auto box-border p-8 bg-gray-300 rounded-lg sm:w-96 dark:bg-gray-700"
+                    >
+                        <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-500 "></div>
+                        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-500 w-40 mb-2.5"></div>
+                        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-500 mb-2.5"></div>
+                        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-500 w-40 mb-2.5"></div>
+                        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-500 w-40 mb-2.5"></div>
+                        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-500 w-36"></div>
+                    </div>
+                ))}
 
                     {courses.map((course, index) => (
                         <motion.div

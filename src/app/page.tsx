@@ -98,7 +98,7 @@ export default function Home() {
         <button className="mt-16 mx-8 transition ease-in-out duration-300 italic text-2xl self-end font-semibold
           text-white bg-primary-black border-2 border-white hover:bg-white hover:text-black focus:outline-none focus:ring-1 focus:ring-white
             rounded-3xl px-8 me-4 mb-4 shadow-md shadow-neutral-100/50">
-          I'M A MENTOR
+          I AM A MENTOR
         </button>
       </motion.div>
     </motion.div>

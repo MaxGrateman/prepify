@@ -1,6 +1,7 @@
 import {ReactNode, ReactSVG, useEffect, useRef, useState} from "react";
 import './../styles/Header.css'
 import Link from "next/link";
+import Image from "next/image";
 
 
 interface HeaderDropdownProps {
@@ -44,7 +45,7 @@ export default function HeaderDropdown({user_image, userId, children} : HeaderDr
             className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
             type="button"
         >
-            <img className="w-10 h-10 rounded-full" src={user_image} alt="user photo" />
+            <Image className="w-10 h-10 rounded-full" src={user_image} alt="user photo" />
             <span className="animate-pingSlow absolute inline-flex h-full w-full rounded-full bg-gray-200 opacity-50"></span>
         </button>
 
