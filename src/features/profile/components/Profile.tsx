@@ -84,7 +84,7 @@ const Profile: React.FC<ProfileProps> = ({ userId }) => {
                 <div className="w-full h-[250px] relative">
                 </div>
                 <div className="flex flex-col items-center -mt-20 z-20">
-                    <Image src={user?.image_path as string} alt="profile_avatar" className="w-40 h-40 border-4 border-white rounded-full object-fill"/>
+                    <Image src={user?.image_path as string} alt="profile_avatar" width={100} height={100} className='w-40 h-40 border-4 border-white rounded-full object-cover'/>
                     <div className="flex items-center space-x-2 mt-2">
                         <p className="text-2xl">{user?.name}</p>
                         <span className="bg-blue-500 rounded-full p-1" title="Verified">
