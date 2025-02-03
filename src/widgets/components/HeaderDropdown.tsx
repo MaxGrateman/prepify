@@ -45,7 +45,7 @@ export default function HeaderDropdown({user_image, userId, children} : HeaderDr
             className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
             type="button"
         >
-            <Image className="rounded-full object-fill w-12 h-12" width={40} height={40} src={user_image} alt="user photo" />
+            <Image className="rounded-full object-fill w-10 h-10" width={40} height={40} src={user_image} alt="user photo" />
             <span className="animate-pingSlow absolute inline-flex h-full w-full rounded-full bg-gray-200 opacity-50"></span>
         </button>
 

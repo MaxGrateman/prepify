@@ -12,7 +12,7 @@ import {GetServerSideProps} from "next";
 import Cookies from "js-cookie";
 
 interface FormData {
-    name?: string;
+    name: string;
     email: string;
     password: string;
     password_confirmation?: string;
@@ -35,15 +35,30 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
     const pathname = usePathname();
     const dispatch: AppDispatch  = useDispatch();
     const [formData, setFormData] = useState<FormData>(initialFormData);
-    const [error, setError] = useState<string | null>(null);
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [success, setSuccess] = useState<string | null>(null);
     const [passwordVisible, setPasswordVisible] = useState(false);
 
     {/*Фкнция по отслеживанию полей инпута*/}
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
-        setFormData({ ...formData, [id]: value });
-    }
+        setFormData((prev) => ({ ...prev, [id]: value }));
+    
+        let errorMsg = "";
+    
+        switch (id) {
+            case "password":
+                if (value.length < 6) errorMsg = "Password must be at least 6 characters.";
+                break;
+            case "password_confirmation":
+                if (value !== formData.password) errorMsg = "Passwords do not match.";
+                break;
+            default:
+                break;
+        }
+    
+        setErrors((prev) => ({ ...prev, [id]: errorMsg }));
+    };
 
     {/*Функция скрытого-пароля*/}
     const togglePasswordVisibility = () => {
@@ -55,8 +70,28 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        const newErrors: { [key: string]: string } = {};
+        if (isRegister && formData.name.trim().length < 3) {
+            newErrors.name = "USERNAME MUST BE AT LEAST 3 CHARACTERS";
+        } else if (formData.name.trim().length > 15) {
+            newErrors.name = "USERNAME CAN'T BE MORE THEN 15 CHARATERS";
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            newErrors.email = "INVALID EMAIL FORMAT";
+        }
+        if (formData.password.length < 6) {
+            newErrors.password = "PASSWORD MUST BE AT LEAST 6 CHARACTERS";
+        }
         if (isRegister && formData.password !== formData.password_confirmation) {
-            setError("Passwords don't match");
+            newErrors.password_confirmation = "PASSWRODS DON'T MATCH";
+        }
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
+        if (isRegister && formData.password !== formData.password_confirmation) {
             return;
         }
 
@@ -68,9 +103,10 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
             });
 
             setSuccess(isRegister ? 'Registration successful!' : 'Login Successful');
-            setError(null);
 
             const userResponse = await dispatch(fetchUserData()).unwrap();
+
+            setErrors({});
 
             const userId = userResponse.id;
 
@@ -79,7 +115,7 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
 
         } catch (error: any) {
             setFormData(initialFormData);
-            setError(error.message);
+            setErrors(error.message);
             setSuccess(null);
         }
     };
@@ -93,16 +129,20 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
 
                 {isRegister && (
                     <div className="relative z-0 w-full mb-5 group">
-                        <input type="text" 
-                            name="name"
+                        <input 
+                            type="text" 
                             id="name" 
-                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
-                            placeholder=" "
-                            autoComplete="new-email" 
-                            required
-                            value={formData.name}
-                            onChange={handleChange} />
-                        <label htmlFor="name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username</label>
+                            value={formData.name} 
+                            onChange={handleChange} 
+                            className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 mb-2 border-b-2 ${
+                                errors.name ? "border-red-500" : "border-gray-300"
+                            } appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer`} 
+                            placeholder=" " 
+                            autoComplete="new-email"
+                            required 
+                        />
+                        <label htmlFor="name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username</label>
+                        {errors.name && <p className="animate-pulse text-red-500 tracking-wider text-sm">{errors.name}</p>}
                     </div>
                 )}
                 
@@ -112,26 +152,28 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
                     
                         name="email" 
                         id="email" 
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer" 
+                        className="block py-2.5 mb-2 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 peer" 
                         placeholder=" " 
                         required
                         autoComplete="new-email" 
                         value={formData.email}
                         onChange={handleChange} />
                     <label htmlFor="email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
+                    {errors.email && <p className="animate-pulse text-red-500 tracking-wider text-sm">{errors.email}</p>}
                 </div>
 
                 <div className="relative z-0 w-full mb-5 group">
                     <input type="password" 
                         name="password" 
                         id="password" 
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+                        className="block py-2.5 px-0 w-full mb-2 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
                         placeholder=" " 
                         required
                         autoComplete="new-password"
                         value={formData.password}
                         onChange={handleChange} />
                     <label htmlFor="password" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
+                    {errors.password && <p className="animate-pulse text-red-500 tracking-wider text-sm uppercase">{errors.password}</p>}
                 </div>
 
                 {isRegister && (
@@ -139,13 +181,14 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
                         <input type="password" 
                             name="password_confirmation" 
                             id="password_confirmation" 
-                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+                            className="block py-2.5 mb-2 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
                             placeholder=" " 
                             required
                             autoComplete="new-password"
                             value={formData.password_confirmation}
-                            onChange={handleChange} />
+                            onChange={handleChange}/>
                         <label htmlFor="password_confirmation" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password</label>
+                        {errors.password_confirmation && <p className="animate-pulse text-red-500 tracking-wider text-sm uppercase">{errors.password_confirmation}</p>}
                     </div>
                 )}
             
@@ -183,3 +226,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 }
 
 export default AuthForm;
+
+function elseif(arg0: boolean) {
+    throw new Error('Function not implemented.');
+}

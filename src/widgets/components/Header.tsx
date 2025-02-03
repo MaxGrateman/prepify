@@ -37,7 +37,7 @@ function Header() {
         <div
             className="bg-transparent w-full z-50"
         >
-            <nav className="grid grid-cols-3 w=[80%] p-2 border-b border-white mx-5">
+            <nav className="grid grid-cols-3 w-full max-w-[98%] p-2 border-b border-white mx-auto">
                 <div className='flex items-center justify-between w-96'>
                     <Link href="/">
                         <p className="text-white font-bold text-3xl cursor-pointer">Prepify</p>
