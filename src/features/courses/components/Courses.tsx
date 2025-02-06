@@ -74,7 +74,9 @@ export default function Courses() {
                         <input type="text" 
                                 name="search"
                                 id="search" 
-                                className="py-1.5 px-8 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+                                className="py-1.5 px-8 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none 
+                                dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer
+                                placeholder:text-gray-600 placeholder:medium placeholder:tracking-wider placeholder:font-medium" 
                                 placeholder="Find your course..."
                                 autoComplete="new-email" 
                                 required />
@@ -89,7 +91,7 @@ export default function Courses() {
                 {/*Вывод карточек-курсов с обработчиками загрузки и ошибок*/}
                 <div className="basis-2/3 grid grid-cols-3 gap-4 place-items-start">
                     {loading ? (
-                        Array.from({ length: 15 }).map((_, index) => (
+                        Array.from({ length: 9 }).map((_, index) => (
                             <div
                                 key={index}
                                 className="w-full h-auto box-border p-8 bg-gray-300 rounded-lg sm:w-96 dark:bg-gray-700"

@@ -30,7 +30,6 @@ const CoursePage: React.FC<{level: string}> = ({ level }) => {
 
     const currentQuestionId = answers[currentIndex]?.question.id;
 
-    // Группируем ответы по текущему вопросу
     const currentQuestion = answers[currentIndex]?.question;
 
     const currentAnswers = useMemo(() => {
