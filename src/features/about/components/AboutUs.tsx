@@ -33,10 +33,10 @@ function AboutUs() {
             <span className="text-5xl text-blue-600">.</span>
             {labelText.map((word, index) => (
                 <React.Fragment key={index}>
-                <motion.span className="inline-block" transition={transition} variants={variants}>
-                    {word}
-                </motion.span>
-                {index < labelText.length - 1 && ' '} {/* Correctly checks the length of `labelText` */}
+                    <motion.span className="inline-block" transition={transition} variants={variants}>
+                        {word}
+                    </motion.span>
+                    {index < labelText.length - 1 && ' '} {/* Correctly checks the length of `labelText` */}
                 </React.Fragment>
             ))}
             </h1>
@@ -44,37 +44,37 @@ function AboutUs() {
             <motion.h3 className="text-xl mt-4 mx-4">
             {paragraphFirstSplit.map((word, index) => (
                 <React.Fragment key={index}>
-                <motion.span className="inline-block" transition={transition} variants={variants}>
-                    {word}
-                </motion.span>
-                {index < paragraphFirstSplit.length - 1 && ' '} {/* Uses the correct array */}
+                    <motion.span className="inline-block" transition={transition} variants={variants}>
+                        {word}
+                    </motion.span>
+                    {index < paragraphFirstSplit.length - 1 && ' '} {/* Uses the correct array */}
                 </React.Fragment>
             ))}
             <div className="h-4"></div>
             {paragraphSecondSplit.map((word, index) => (
                 <React.Fragment key={index}>
-                <motion.span className="inline-block" transition={transition} variants={variants}>
-                    {word}
-                </motion.span>
-                {index < paragraphSecondSplit.length - 1 && ' '} {/* Uses the correct array */}
+                    <motion.span className="inline-block" transition={transition} variants={variants}>
+                        {word}
+                    </motion.span>
+                    {index < paragraphSecondSplit.length - 1 && ' '} {/* Uses the correct array */}
                 </React.Fragment>
             ))}
             <div className="h-4"></div>
             {paragrapThirdSplit.map((word, index) => (
                 <React.Fragment key={index}>
-                <motion.span className="inline-block" transition={transition} variants={variants}>
-                    {word}
-                </motion.span>
-                {index < paragrapThirdSplit.length - 1 && ' '} {/* Uses the correct array */}
+                    <motion.span className="inline-block" transition={transition} variants={variants}>
+                        {word}
+                    </motion.span>
+                    {index < paragrapThirdSplit.length - 1 && ' '} {/* Uses the correct array */}
                 </React.Fragment>
             ))}
             <div className="h-4"></div>
             {paragrapFourthSplit.map((word, index) => (
                 <React.Fragment key={index}>
-                <motion.span className="inline-block" transition={transition} variants={variants}>
-                    {word}
-                </motion.span>
-                {index < paragrapFourthSplit.length - 1 && ' '} {/* Uses the correct array */}
+                    <motion.span className="inline-block" transition={transition} variants={variants}>
+                        {word}
+                    </motion.span>
+                    {index < paragrapFourthSplit.length - 1 && ' '} {/* Uses the correct array */}
                 </React.Fragment>
             ))}
             </motion.h3>

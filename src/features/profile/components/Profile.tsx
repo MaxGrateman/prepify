@@ -43,7 +43,11 @@ const Profile: React.FC<ProfileProps> = ({ userId }) => {
                 delay: 0.5,
                 ease: [0, 0.71, 0.2, 1.01],
                 }} className='mt-20 max-w-md border border-neutral-100 shadow-lg shadow-neutral-100/50 rounded-md box-border p-8 h-1/2 mx-6'>
+
+                    
                 {loading ? (
+
+                    /*Скелетон лоудинг*/
                     <div role="status" className="max-w-sm p-4 border border-gray-200 rounded-sm shadow-sm animate-pulse md:p-6 dark:border-gray-700">
                         <div className="flex items-center justify-center h-48 mb-4 bg-gray-300 rounded-sm dark:bg-gray-700">
                             <svg className="w-40 h-40 me-3 text-gray-200 dark:text-gray-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -67,6 +71,8 @@ const Profile: React.FC<ProfileProps> = ({ userId }) => {
                         <p>{error}</p>
                     </div>
                 ) : (
+
+                    /*Контент профиля*/
                     <div
                     className="flex flex-col items-center -mt-20 z-20 gap-1 relative transform hover:rotate-x-15 hover:rotate-y-30 transition-transform duration-300">
                         <Image src={user?.image_path as string} alt="profile_avatar" width={100} height={100} className='w-40 h-40 border-2 border-neutral-100 shadow-lg shadow-neutral-100/50 rounded-full object-cover'/>

@@ -83,7 +83,7 @@ export default function Home() {
         <button type="button" className="mt-48 transition ease-in-out duration-300 text-white italic bg-purple-700 hover:bg-white hover:text-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-300 font-semibold
             rounded-tl-2xl rounded-br-2xl text-3xl px-6 py-3 text-center mb-2 dark:bg-purple-600 dark:hover:bg-white dark:focus:ring-purple-900">
             START
-          </button>
+        </button>
       </motion.div>
     </motion.div>
 
