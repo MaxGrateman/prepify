@@ -16,23 +16,22 @@ const boxVariants = {
 
 interface CheckboxMotionProps {
   id: string;
+  isChecked: boolean;
 }
 
-export const CheckboxMotion: React.FC<CheckboxMotionProps> = ({ id }) => {
-  const [isChecked, setIsChecked] = useState(false);
+export const CheckboxMotion: React.FC<CheckboxMotionProps> = ({ id, isChecked }) => {
   const pathLength = useMotionValue(0);
   const opacity = useTransform(pathLength, [0.05, 0.15], [0, 1]);
 
   return (
     <motion.svg
-      initial={false}
-      animate={isChecked ? "checked" : "unchecked"}
-      whileHover="hover"
-      whileTap="pressed"
-      width="40"
-      height="40"
-      onClick={() => setIsChecked(!isChecked)}
-      id={id}
+    initial={false}
+    animate={isChecked ? "checked" : "unchecked"}
+    whileHover="hover"
+    whileTap="pressed"
+    width="40"
+    height="40"
+    id={id}
     >
       <motion.rect
         x="2"
@@ -49,9 +48,9 @@ export const CheckboxMotion: React.FC<CheckboxMotionProps> = ({ id }) => {
       />
 
       <motion.path
-        d="M 7 15 L 15 25 L 30 10"
+        d="M 5 20 L 15 30 L 35 10"
         fill="transparent"
-        strokeWidth="3"
+        strokeWidth="4"
         stroke="#FFFFFF"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -59,7 +58,9 @@ export const CheckboxMotion: React.FC<CheckboxMotionProps> = ({ id }) => {
         animate={isChecked ? "checked" : "unchecked"}
         style={{ pathLength, opacity }}
         custom={isChecked}
+        width="25"
+        height="25"
       />
-    </motion.svg>
+  </motion.svg>
   );
 };

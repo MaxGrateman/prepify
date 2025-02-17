@@ -16,6 +16,7 @@ const CoursePage: React.FC<{level: string}> = ({ level }) => {
     // const { answers, loading, error } = useSelector((state: RootState) => state.answers);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [selectedAnswerId, setSelectedAnswerId] = useState<number | null>(null)
+    const [checkedStates, setCheckedStates] = useState<Record<number, boolean>>({});
 
     useEffect(() => {
         let apiQuestionsURL: string;
@@ -86,24 +87,34 @@ const CoursePage: React.FC<{level: string}> = ({ level }) => {
         console.log('Test finished');
     };
 
+    const handleToggle = (id: number) => {
+        setCheckedStates(prev => ({
+            ...prev,
+            [id]: !prev[id]
+        }));
+    };
+
     return (
         <div className="flex flex-col h-[80%] p-10 justify-between">
             <h1 className="text-4xl uppercase font-medium tracking-wider text-white"><span className="text-5xl text-blue-600">.</span>{level} Test Name</h1>
             {currentQuestion && (
                 <div className="flex-col w-[100%] justify-center items-center px-20">
                     <p className="tracking-wider font-medium text-3xl self-start uppercase">{currentQuestion.text}</p>
-                        {currentAnswers.map((answer) => (
-                            <div className="flex gap-3 items-center mt-8 mx-auto hover:bg-gray-800 hover:text-black rounded-md cursor-pointer transition ease-in-out duration-400">
-                                <div className="flex items-center h-10">
-                                    <CheckboxMotion id={`answer${answer.id}`}/>
-                                </div>
-                                <div key={answer.id} >
-                                    <label htmlFor={`answer${answer.id}`} className="font-medium tracking-wider text-lg text-gray-900 dark:text-gray-300 cursor-pointer">
-                                        {answer.text}
-                                    </label>
-                                </div>
+                    {currentAnswers.map((answer) => (
+                        <label
+                            key={answer.id}
+                            htmlFor={`helper-checkbox-answer-${answer.id}`} 
+                            className="flex gap-3 items-center mt-8 mx-auto hover:bg-gray-800 hover:text-black rounded-md cursor-pointer transition ease-in-out duration-400 p-2"
+                            onClick={() => handleToggle(answer.id)}
+                        >
+                            <div className="flex items-center h-10">
+                                <CheckboxMotion id={`helper-checkbox-answer-${answer.id}`} isChecked={checkedStates[answer.id] || false}/>
                             </div>
-                        ))}
+                            <span className="font-medium tracking-wider text-lg text-gray-900 dark:text-gray-300">
+                                {answer.text}
+                            </span>
+                        </label>
+                    ))}
                 </div>
             )}
             <div className="flex justify-center px-20">
@@ -113,7 +124,7 @@ const CoursePage: React.FC<{level: string}> = ({ level }) => {
                     </button>
                 ) : (
                     <button type="button" className="w-[100%] transition ease-in-out duration-300 text-white italic bg-transparent hover:bg-white hover:text-black focus:outline-none focus:ring-4 focus:ring-slate-100 font-semibold
-                        rounded-lg text-2xl px-2 py-2 text-center mb-2 dark:focus:ring-slate-500 "
+                        rounded-lg text-2xl px-2 py-2 text-center mb-2 dark:focus:ring-slate-500"
                         onClick={handleNext}
                     >
                         NEXT
