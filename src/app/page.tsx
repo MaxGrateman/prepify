@@ -2,7 +2,6 @@
 
 import { motion } from "motion/react";
 import "./page.css";
-import { LuArrowUpRight } from "react-icons/lu";
 import Footer from "@/widgets/components/Footer";
 import React from "react";
 import Link from 'next/link';

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../shared/styles/globals.css";
-import Header from '@/widgets/components/Header'
-import './../shared/styles/Utilities.css'
+import '@/utilities/styles/Utilities.css'
 import StoreProvider from './StoreProvider';
 import GlobalWrapper from "./GlobalWrapper";
 
