@@ -90,7 +90,7 @@ function Header() {
                              </>
                          ) : (
                              !loading && user?.image_path ? (
-                                <HeaderDropdown user_image={user.image_path} userId={user.id}>
+                                <HeaderDropdown user_image={user.image_path} userId={user.id} userName={user.name} userEmail={user.email}>
                                     <Link href="/" onClick={handleLogout} className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600">
                                         Log out
                                     </Link>

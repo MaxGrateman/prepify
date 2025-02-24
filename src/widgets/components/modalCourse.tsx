@@ -25,6 +25,7 @@ const ModalCourse: React.FC<ModalCourseProps> = ({id, name, description, show, o
     }
 
     if (!show) return null;
+    
 
     return(
         // <div className="modal show d-block" tabIndex={-1} style={{ backgroundColor: 'rgba(0,0, 0, 0.6)' }}>

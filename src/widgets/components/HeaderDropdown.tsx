@@ -7,10 +7,12 @@ import Image from "next/image";
 interface HeaderDropdownProps {
     userId: number;
     user_image: string;
+    userName: string;
+    userEmail: string;
     children?: ReactNode;
 }
 
-export default function HeaderDropdown({user_image, userId, children} : HeaderDropdownProps) {
+export default function HeaderDropdown({user_image, userId, children, userEmail, userName} : HeaderDropdownProps) {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -45,15 +47,19 @@ export default function HeaderDropdown({user_image, userId, children} : HeaderDr
             className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
             type="button"
         >
-            <Image className="rounded-full object-fill w-9 h-9" width={38} height={38} src={user_image} alt="user photo" />
+            <Image className="rounded-full object-fill w-10 h-10" width={39} height={39} src={user_image} alt="user photo" />
             <span className="animate-pingSlow absolute inline-flex h-full w-full rounded-full bg-gray-200 opacity-50"></span>
         </button>
 
         {isOpen && (
             <div
                 id="dropdownAvatar"
-                className="absolute right-0 top-11 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-lg w-44 dark:bg-gray-700 dark:divide-gray-600"
+                className="absolute right-0 top-11 z-10 bg-white divide-y divide-gray-100 rounded-md shadow-lg w-44 dark:bg-gray-700 dark:divide-gray-600"
             >
+                <div className="py-4">
+                    <p className="px-4 text-base text-white tracking-wider font-medium">{userName}</p>
+                    <p className="px-4 text-sm tracking-wider text-gray-700 dark:text-gray-200">{userEmail}</p>
+                </div>
                 <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
                     <li>
                         <Link className="dropdown-item block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600" href={`/profile/${userId}`}>

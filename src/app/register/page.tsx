@@ -1,6 +1,6 @@
 import AuthForm from '../../features/auth/components/AuthForm';
 import {apiRegistration} from "@/features/auth/api/apiUrl";
-import TransitionAuth from '@/utilities/TransitionAuth';
+import TransitionAuth from '@/utilities/transitions/TransitionAuth';
 import { AnimatePresence } from 'motion/react';
 
 export default function RegisterPage() {
