@@ -84,11 +84,11 @@ const Profile: React.FC<ProfileProps> = ({ userId }) => {
                                 </svg>
                             </span>
                         </div>
-                        <p className="text-gray-600 text-xl font-medium tracking-wider">E-MAIL: <span className='text-blue-700'>{user?.email}</span></p>
-                        <p className="text-xl font-medium tracking-wider text-gray-500">LEVEL: <span className='text-blue-700'>{user?.level}</span></p>
-                        <p className="text-xl font-medium tracking-wider text-gray-500">STACK: <span className='text-blue-700'>{user?.stack}</span></p>
-                        <p className="text-xl font-medium tracking-wider text-gray-500">COUNTRY: <span className='text-blue-700'>{user?.country}</span></p>
-                        <p className="text-xl font-medium tracking-wider text-gray-500">ABOUT: <span className='text-blue-700'>{user?.about}</span></p>
+                        <p className="text-gray-600 text-xl font-medium tracking-wider">E-MAIL: <span className='text-violet-700'>{user?.email}</span></p>
+                        <p className="text-xl font-medium tracking-wider text-gray-500">LEVEL: <span className='text-violet-700'>{user?.level}</span></p>
+                        <p className="text-xl font-medium tracking-wider text-gray-500">STACK: <span className='text-violet-700'>{user?.stack}</span></p>
+                        <p className="text-xl font-medium tracking-wider text-gray-500">COUNTRY: <span className='text-violet-700'>{user?.country}</span></p>
+                        <p className="text-xl font-medium tracking-wider text-gray-500">ABOUT: <span className='text-violet-700'>{user?.about}</span></p>
                         <div className="flex-1 flex flex-col items-center px-8 mt-2">
                             <div className="absolute -bottom-[135px] flex items-center space-x-4">
                                 <button className="transition ease-in-out duration-300 mt-5 italic text-xl self-end font-medium

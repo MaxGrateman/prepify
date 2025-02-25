@@ -21,7 +21,7 @@ export default function RootLayout({
           <html lang="en">
               <head>
               </head>
-              <body className={inter.className}>
+              <body className={inter.className} id="scrollbar">
                   {/* Main layout components */}
                   <GlobalWrapper>{children}</GlobalWrapper>
               </body>

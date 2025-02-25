@@ -74,7 +74,7 @@ export default function Courses() {
     return(
         <section className="mt-10 px-8">
             <div className="flex items-start flex-wrap gap-5">
-                <h1 className="text-3xl basis-1/6"><span className="text-5xl text-blue-600">.</span>COURSES</h1>
+                <h1 className="text-3xl basis-1/6"><span className="text-5xl text-violet-500">.</span>COURSES</h1>
 
                 {/*Поисковая строка*/}
                 <Search placeholder="Find your course..." onChange={(e: any) => setSearchTerm(e.target.value)} />
@@ -128,8 +128,8 @@ export default function Courses() {
                             >
                             <h5 className="text-lg font-bold">{course.name ?? "Default name"}</h5>
                             <p className="text-sm font-semibold text-gray-700">{course.description ?? "Default description"}</p>
-                            <button className="inline-flex items-center mt-4 px-3 py-2 text-sm font-medium text-center text-white bg-blue-600 rounded-lg 
-                                            hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            <button className="inline-flex items-center mt-4 px-3 py-2 text-sm font-medium text-center text-white bg-violet-500 rounded-lg 
+                                            hover:bg-violet-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-violet-500 dark:hover:bg-violet-700 dark:focus:ring-violet-800"
                                         type="button"
                                         onClick={() => handleButtonClick(course)}
                                     >

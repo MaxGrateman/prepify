@@ -18,9 +18,9 @@ export default function Home() {
   const words = text.split(" ");
 
   return (
-  <>
+  <div className="scrollbar">
     {/*Видео секция на весь экран*/}
-    <div className="relative h-screen text-left w-screen">
+    <div className="relative h-screen text-left w-screen ">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -42,7 +42,7 @@ export default function Home() {
 
     {/*Первая секция*/}
     <motion.div initial="hidden" whileInView="visible" className="mt-48 mx-5 w-[50%] flex flex-col">
-        <motion.h5 transition={transition} variants={variants} className="mb-12 italic text-lg text-blue-600">.about us</motion.h5>
+        <motion.h5 transition={transition} variants={variants} className="mb-12 italic text-lg text-violet-500">.about us</motion.h5>
         <motion.p transition={transition} variants={variants} className=" text-2xl tracking-wide">PREPIFY IS A QUICK RELIABLE WAY TO PREPARE AS MUCH AS POSSBILE
           FOR YOUR UPCOMING INTERVIEW. WE SUGGEST YOU WIDE RANGE OF TESTS
           OF ALL POSSIBLE QUESTIONS. REGISTER NOW TO TRY </motion.p>
@@ -55,7 +55,7 @@ export default function Home() {
 
     {/*Вторая секция*/}
     <motion.div initial="hidden" whileInView="visible" className="mt-48 mx-5 w-[80%]">
-      <motion.h5 transition={transition} variants={variants} className="mb-12 italic text-lg text-blue-600">.courses</motion.h5>
+      <motion.h5 transition={transition} variants={variants} className="mb-12 italic text-lg text-violet-500">.courses</motion.h5>
       <motion.div transition={transition} variants={variants} className="mx-8">
         <p className="italic text-4xl font-semibold text-white"><span className="invisible inline-block w-10"></span>TRY TO FIND YOUR QUESTIONS</p>
         <hr className="h-0.5 bg-white w-[100%]"></hr>
@@ -79,8 +79,8 @@ export default function Home() {
               <option value="Senior">Senior</option>
           </select>
         </form>
-        <button type="button" className="mt-48 transition ease-in-out duration-300 text-white italic bg-purple-700 hover:bg-white hover:text-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-300 font-semibold
-            rounded-tl-2xl rounded-br-2xl text-3xl px-6 py-3 text-center mb-2 dark:bg-purple-600 dark:hover:bg-white dark:focus:ring-purple-900">
+        <button type="button" className="mt-48 transition ease-in-out duration-300 text-white italic bg-violet-500 hover:bg-white hover:text-violet-700 focus:outline-none focus:ring-4 focus:ring-violet-300 font-semibold
+            rounded-tl-2xl rounded-br-2xl text-3xl px-6 py-3 text-center mb-2 dark:bg-violet-600 dark:hover:bg-white dark:focus:ring-violet-900">
             START
         </button>
       </motion.div>
@@ -88,7 +88,7 @@ export default function Home() {
 
     {/*Третья секция*/}
     <motion.div initial="hidden" whileInView="visible" className="mt-48 mx-5 w-[75%]" >
-      <motion.h5 transition={transition} variants={variants} className="mb-12 italic text-lg text-blue-600">.soon</motion.h5>
+      <motion.h5 transition={transition} variants={variants} className="mb-12 italic text-lg text-violet-500">.soon</motion.h5>
       <motion.div transition={transition} variants={variants} className="mx-8">
         <p className="pb-16 italic text-3xl font-medium text-white">PREPARE FOR YOUR DREAM JOB WITH MENTOR INTERVIEWER</p>
         <p className="text-2xl tracking-wide">LOOKING TO ACE YOUR NEXT PROGRAMMING INTERVIEW? OUR MENTOR INTREVIEWER FEATURE
@@ -104,6 +104,6 @@ export default function Home() {
 
     {/*Футер сайста*/}
     <Footer/>
-  </>
+  </div>
   );
 }
