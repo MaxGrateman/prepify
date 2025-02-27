@@ -122,7 +122,7 @@ const ModalCourse: React.FC<ModalCourseProps> = ({id, name, description, show, o
                         {/* Card 1 */}
                         <li onClick={() => handleCardSelect('Junior')}>
                             <input type="radio" id="job-1" name="job" value="job-1" className="hidden peer" required />
-                            <label htmlFor="job-1" className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 dark:peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500">                           
+                            <label htmlFor="job-1" className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-violet-500 peer-checked:border-violet-600 dark:peer-checked:border-violet-600 peer-checked:text-violet-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500">                           
                                 <div className="block">
                                     <div className="w-full text-lg font-semibold">Junior</div>
                                     <div className="w-full text-gray-500 dark:text-gray-400">{description}</div>
@@ -134,7 +134,7 @@ const ModalCourse: React.FC<ModalCourseProps> = ({id, name, description, show, o
                         {/* Card 2 */}
                         <li onClick={() => handleCardSelect('Middle')}>
                             <input type="radio" id="job-2" name="job" value="job-2" className="hidden peer"/>
-                            <label htmlFor="job-2" className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 dark:peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500">
+                            <label htmlFor="job-2" className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-violet-500 peer-checked:border-violet-600 dark:peer-checked:border-violet-600 peer-checked:text-violet-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500">
                                 <div className="block">
                                     <div className="w-full text-lg font-semibold">Middle</div>
                                     <div className="w-full text-gray-500 dark:text-gray-400">{description}</div>
@@ -146,7 +146,7 @@ const ModalCourse: React.FC<ModalCourseProps> = ({id, name, description, show, o
                         {/* Card 3 */}
                         <li onClick={() => handleCardSelect('Senior')}>
                             <input type="radio" id="job-3" name="job" value="job-3" className="hidden peer"/>
-                            <label htmlFor="job-3" className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 dark:peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500">
+                            <label htmlFor="job-3" className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-violet-500 peer-checked:border-violet-600 dark:peer-checked:border-violet-600 peer-checked:text-violet-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500">
                                 <div className="block">
                                     <div className="w-full text-lg font-semibold">Senior</div>
                                     <div className="w-full text-gray-500 dark:text-gray-400">{description}</div>
@@ -157,7 +157,7 @@ const ModalCourse: React.FC<ModalCourseProps> = ({id, name, description, show, o
                     </ul>
 
                     {/* Start Button */}
-                    <button className="text-white inline-flex w-full cursor-pointer justify-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    <button className="text-white inline-flex w-full cursor-pointer justify-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800"
                             disabled={!selectedCard}
                             onClick={handleStart}>
                         Start

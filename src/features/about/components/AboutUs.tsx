@@ -30,7 +30,7 @@ function AboutUs() {
                 whileInView="visible"
                 transition={{ staggerChildren: 0.04 }}>
             <h1 className="italic text-3xl">
-            <span className="text-5xl text-blue-600">.</span>
+            <span className="text-5xl text-violet-500">.</span>
             {labelText.map((word, index) => (
                 <React.Fragment key={index}>
                     <motion.span className="inline-block" transition={transition} variants={variants}>
