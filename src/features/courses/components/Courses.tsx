@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "@/lib/store";
 import {useEffect, useMemo, useState} from "react";
 import {fetchCourses} from "@/lib/features/courses/coursSlice";
-import ModalCourse from "@/widgets/components/modalCourse";
+import ModalCourse from "@/features/courses/components/modalCourse";
 import { motion } from "motion/react";
 import Search from "@/shared/components/Search";
 

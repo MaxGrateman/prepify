@@ -125,7 +125,7 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
     return(
         <section className="mt-48">
             <form onSubmit={handleSubmit} className="max-w-md mx-auto border border-neutral-100 shadow-md shadow-neutral-100/50 rounded-md box-border p-8">
-                <h3 className="mb-6 text-xl">{isRegister ? 'REGISTRATION' : 'LOGIN'}</h3>
+                <h3 className="mb-6 text-xl tracking-wider">{isRegister ? 'REGISTRATION' : 'LOGIN'}</h3>
 
                 {isRegister && (
                     <div className="relative z-0 w-full mb-5 group">

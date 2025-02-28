@@ -41,8 +41,8 @@ function PasswordRecover() {
 
     return (
         <section className="mt-48">
-            <form className="max-w-md mx-auto border border-neutral-100 shadow-lg shadow-neutral-100/50 rounded-md box-border px-8 py-6">
-                <h3 className="mb-6 text-xl">PASSWORD RECOVERY</h3>
+            <form onSubmit={handleSubmit} className="max-w-md mx-auto border border-neutral-100 shadow-lg shadow-neutral-100/50 rounded-md box-border px-8 py-6">
+                <h3 className="mb-6 text-xl tracking-wider">PASSWORD RECOVERY</h3>
                 <div className="relative z-0 w-full mb-5 group">
                     <input type="email" 
                         name="email" 

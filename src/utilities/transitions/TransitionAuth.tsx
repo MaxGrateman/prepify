@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 
+{/*Утилита перехода-анимации между формами регистрации-логина-смены пароля-напоминание пароля*/}
 export default function TransitionAuth({children}: Readonly<{children: React.ReactNode;}>) {
     
     const transition = {

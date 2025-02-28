@@ -1,11 +1,12 @@
 import {NextRequest, NextResponse} from "next/server";
 
 const publicRoutes = ['/login', '/register']
+const protectedRoutes = ['/profile']
 
 export default function middleware(req: NextRequest) {
     const token = req.cookies.get('token')?.value;
     const path = req.nextUrl.pathname
-    const isProtectedRoute = path.startsWith('/profile')
+    const isProtectedRoute = protectedRoutes.includes(path)
     const isPublicRoute = publicRoutes.includes(path)
 
     if (isProtectedRoute && !token) {
