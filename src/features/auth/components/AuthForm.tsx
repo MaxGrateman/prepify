@@ -83,7 +83,6 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
             router.push(`/profile/${userId}`);
 
         } catch (error: any) {
-            setFormData(initialFormData);
             setErrors(error.message);
             setSuccess(null);
         }
