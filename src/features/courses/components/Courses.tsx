@@ -3,7 +3,7 @@
 import {useRouter, useSearchParams} from "next/navigation";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "@/lib/store";
-import {Suspense, useEffect, useMemo, useState} from "react";
+import {Suspense, useEffect, useState} from "react";
 import {fetchCourses} from "@/lib/features/courses/coursSlice";
 import ModalCourse from "@/features/courses/components/modalCourse";
 import { motion } from "motion/react";
@@ -19,8 +19,8 @@ interface Course {
 export default function Courses() {
 
     const [searchTerm, setSearchTerm] = useState("");
-    const searchParams = useSearchParams();
-    const query = searchParams.get("query")?.toLowerCase() || "";
+    // const searchParams = useSearchParams();
+    // const query = searchParams.get("query")?.toLowerCase() || "";
 
     {/*Хуки модального окна*/}
     const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
@@ -51,7 +51,7 @@ export default function Courses() {
     }
 
     const filteredCourses = courses.filter((course) =>
-        course.name?.toLowerCase().includes(query)
+        course.name?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     {/*Кнопка с проверкой на юзера, на каждой карточке*/}

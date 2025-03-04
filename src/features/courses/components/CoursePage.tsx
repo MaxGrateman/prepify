@@ -1,3 +1,5 @@
+'use client'
+
 import {useEffect, useState, useMemo} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchQuestionsByLevel} from "@/lib/features/courses/questionSlice";
