@@ -42,14 +42,14 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
 
     {/*Фкнция по отслеживанию полей инпута*/}
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
+        const { id, value } = e.target;
+        setFormData((prev) => ({ ...prev, [id]: value }));
     };
 
     {/*Функция срабатывающая по нажатию, проверяет данные и перенаправляет на профиль*/}
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        
+
         console.log("Submitting form data:", formData);
 
         const newErrors = validateForm(formData, isRegister);
@@ -73,6 +73,7 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
             setSuccess(isRegister ? 'Registration successful!' : 'Login Successful');
 
             const userResponse = await dispatch(fetchUserData()).unwrap();
+            console.log("User response:", userResponse);
 
             setErrors({});
 
@@ -96,7 +97,6 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
                 {isRegister && (
                     <div className="relative z-0 w-full mb-5 group">
                         <input 
-                            type="text" 
                             id="name" 
                             value={formData.name} 
                             onChange={handleChange} 
@@ -173,8 +173,8 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-    const token = Cookies.get('token');
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const token = context.req.cookies?.token;
 
     if (token) {
         return {
@@ -191,7 +191,3 @@ export const getServerSideProps: GetServerSideProps = async () => {
 }
 
 export default AuthForm;
-
-function elseif(arg0: boolean) {
-    throw new Error('Function not implemented.');
-}
