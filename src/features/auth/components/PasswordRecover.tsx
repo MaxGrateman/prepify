@@ -4,7 +4,6 @@ import { useState } from "react";
 import axios from "axios";
 import { apiPasswordRecover } from "@/features/auth/api/apiUrl";
 import {useRouter} from "next/navigation";
-
 {/*Компонент по востановлению пароля*/}
 interface FormData {
     email: string;

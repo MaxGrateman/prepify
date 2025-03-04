@@ -3,7 +3,7 @@
 import {useRouter, useSearchParams} from "next/navigation";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "@/lib/store";
-import {useEffect, useMemo, useState} from "react";
+import {Suspense, useEffect, useMemo, useState} from "react";
 import {fetchCourses} from "@/lib/features/courses/coursSlice";
 import ModalCourse from "@/features/courses/components/modalCourse";
 import { motion } from "motion/react";
@@ -77,8 +77,9 @@ export default function Courses() {
                 <h1 className="text-3xl basis-1/6"><span className="text-5xl text-violet-500">.</span>COURSES</h1>
 
                 {/*Поисковая строка*/}
-                <Search placeholder="Find your course..." onChange={(e: any) => setSearchTerm(e.target.value)} />
-
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Search placeholder="Find your course..." onChange={(e: any) => setSearchTerm(e.target.value)} />
+                </Suspense>
                 {/*Фильтры*/}
                 <div className="basis-1/6 w-80 h-96 box-border p-4 border-neutral-100 shadow-sm shadow-neutral-100/50 border rounded-lg flex justify-items-start">
                     <h2 className="text-2xl">FILTERS</h2>

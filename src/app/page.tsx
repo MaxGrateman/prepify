@@ -64,7 +64,7 @@ export default function Home() {
         <form className="w-1/3">
           <select id="underline_select" className="block px-0 w-full text-xl text-white bg-transparent border-0 border-b-2 border-white appearance-none
            dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-              <option selected>programming language</option>
+              <option defaultValue="programming language">programming language</option>
               <option value="JavaScript">JavaScript</option>
               <option value="PHP">PHP</option>
               <option value="Python">Python</option>
@@ -73,7 +73,7 @@ export default function Home() {
         <form className="w-1/3">
           <select id="underline_select" className="block px-0 w-full text-xl text-white bg-transparent border-0 border-b-2 border-white appearance-none
            dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-              <option selected>skill level</option>
+              <option defaultValue='skill level'>skill level</option>
               <option value="Junior">Junior</option>
               <option value="Middle">Middle</option>
               <option value="Senior">Senior</option>

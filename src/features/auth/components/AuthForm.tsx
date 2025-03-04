@@ -10,6 +10,7 @@ import {fetchUserData} from "@/lib/features/profile/userSlice";
 import {AppDispatch} from "@/lib/store";
 import {GetServerSideProps} from "next";
 import Cookies from "js-cookie";
+import validateForm from '@/utilities/components/validateForm';
 
 interface FormData {
     name: string;
@@ -43,48 +44,13 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
         setFormData((prev) => ({ ...prev, [id]: value }));
-    
-        let errorMsg = "";
-    
-        switch (id) {
-            case "password":
-                if (value.length < 6) errorMsg = "Password must be at least 6 characters.";
-                break;
-            case "password_confirmation":
-                if (value !== formData.password) errorMsg = "Passwords do not match.";
-                break;
-            default:
-                break;
-        }
-    
-        setErrors((prev) => ({ ...prev, [id]: errorMsg }));
     };
-
-    {/*Функция скрытого-пароля*/}
-    const togglePasswordVisibility = () => {
-        setPasswordVisible(!passwordVisible);
-    }
-
 
     {/*Функция срабатывающая по нажатию, проверяет данные и перенаправляет на профиль*/}
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const newErrors: { [key: string]: string } = {};
-        if (isRegister && formData.name.trim().length < 3) {
-            newErrors.name = "USERNAME MUST BE AT LEAST 3 CHARACTERS";
-        } else if (formData.name.trim().length > 15) {
-            newErrors.name = "USERNAME CAN'T BE MORE THEN 15 CHARATERS";
-        }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-            newErrors.email = "INVALID EMAIL FORMAT";
-        }
-        if (formData.password.length < 6) {
-            newErrors.password = "PASSWORD MUST BE AT LEAST 6 CHARACTERS";
-        }
-        if (isRegister && formData.password !== formData.password_confirmation) {
-            newErrors.password_confirmation = "PASSWRODS DON'T MATCH";
-        }
+        const newErrors = validateForm(formData, isRegister);
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
@@ -139,7 +105,6 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
                             } appearance-none dark:text-white dark:border-gray-600 dark:focus:border-violet-500 focus:outline-none focus:ring-0 focus:border-violet-600 peer`} 
                             placeholder=" " 
                             autoComplete="new-email"
-                            required 
                         />
                         <label htmlFor="name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-violet-600 peer-focus:dark:text-violet-500A peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username</label>
                         {errors.name && <p className="animate-pulse text-red-500 tracking-wider text-sm">{errors.name}</p>}

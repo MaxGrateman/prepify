@@ -8,11 +8,6 @@ import { AnimatePresence, motion, useTime } from "motion/react";
 
 {/* ВНИМАНИЕ! Копмпонет с ужсным кодом. Нуждаетя в правках  */}
 
-interface Question {
-    id: number,
-    text: string | null;
-}
-
 const CoursePage: React.FC<{level: string}> = ({ level }) => {
     const dispatch: AppDispatch = useDispatch();
     // const { answers, loading, error } = useSelector((state: RootState) => state.answers);
