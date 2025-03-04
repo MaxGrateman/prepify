@@ -42,13 +42,15 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
 
     {/*Фкнция по отслеживанию полей инпута*/}
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { id, value } = e.target;
-        setFormData((prev) => ({ ...prev, [id]: value }));
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
     {/*Функция срабатывающая по нажатию, проверяет данные и перенаправляет на профиль*/}
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        
+        console.log("Submitting form data:", formData);
 
         const newErrors = validateForm(formData, isRegister);
 
@@ -85,8 +87,6 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
             setSuccess(null);
         }
     };
-
-
 
     return(
         <section className="mt-48">
