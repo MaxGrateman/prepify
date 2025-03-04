@@ -2,7 +2,6 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import {apiProfile} from "@/features/profile/api/apiUrlProfile";
 import axios from "axios";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 
 export interface UserProfile {

@@ -3,13 +3,6 @@ import Cookies from "js-cookie";
 import React from "react";
 
 {/*Компонент авторизации пользователя по токену, отправляет введеный данные и сохраняет токен в куки*/}
-interface AuthUserData {
-    name: string;
-    email: string;
-    password: string;
-    password_confirmation?: string;
-}
-
 interface AuthResponse {
     access_token: string;
 }
@@ -17,7 +10,7 @@ interface AuthResponse {
 export async function AuthUser(
     router: any,
     url: string,
-    userData: { passwordConfirmation?: string; password: string; name?: string; email: string }
+    userData: {  name?: string; email: string; password: string; passwordConfirmation?: string;}
 ): Promise<void> {
     try {
         const response = await axios.post<AuthResponse>(url, userData, {
@@ -27,7 +20,7 @@ export async function AuthUser(
         });
 
         if (response.data.access_token) {
-            Cookies.set('token', response.data.access_token, { expires: 7, secure: true, sameSite: 'strict' });
+            Cookies.set('token', response.data.access_token, { secure: true, sameSite: 'strict' });
         } else {
             throw new Error('Authentication failed');
         }

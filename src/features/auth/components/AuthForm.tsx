@@ -9,7 +9,6 @@ import {useDispatch} from "react-redux";
 import {fetchUserData} from "@/lib/features/profile/userSlice";
 import {AppDispatch} from "@/lib/store";
 import {GetServerSideProps} from "next";
-import Cookies from "js-cookie";
 import validateForm from '@/utilities/components/validateForm';
 
 interface FormData {
@@ -49,41 +48,47 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
     {/*Функция срабатывающая по нажатию, проверяет данные и перенаправляет на профиль*/}
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
+    
         console.log("Submitting form data:", formData);
-
+    
         const newErrors = validateForm(formData, isRegister);
-
+    
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
             return;
         }
-
+    
         if (isRegister && formData.password !== formData.password_confirmation) {
             return;
         }
-
+    
         try {
             // Авторизация пользователя
             await AuthUser(router, apiUrl, {
-                ...formData,
-                ...(isRegister && { passwordConfirmation: formData.password_confirmation }),
+                email: formData.email,
+                password: formData.password,
+                ...(isRegister && { name: formData.name, passwordConfirmation: formData.password_confirmation }),
             });
-
+    
             setSuccess(isRegister ? 'Registration successful!' : 'Login Successful');
-
+    
             const userResponse = await dispatch(fetchUserData()).unwrap();
             console.log("User response:", userResponse);
-
+    
             setErrors({});
-
-            const userId = userResponse.id;
-
+    
+            if (!userResponse || !userResponse.id) {
+                throw new Error("User ID is missing.");
+            }
+    
             // Переход на профиль
-            router.push(`/profile/${userId}`);
-
+            setTimeout(() => {
+                router.push(`/profile/${userResponse.id}`);
+            }, 100);
+    
         } catch (error: any) {
-            setErrors(error.message);
+            console.error("Error during submission:", error);
+            setErrors(error.message || "Something went wrong.");
             setSuccess(null);
         }
     };
@@ -120,7 +125,7 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
                         placeholder=" " 
                         required
                         autoComplete="new-email" 
-                        value={formData.email}
+                        value={formData.email || " "}
                         onChange={handleChange} />
                     <label htmlFor="email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-violet-600 peer-focus:dark:text-violet-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
                     {errors.email && <p className="animate-pulse text-red-500 tracking-wider text-sm">{errors.email}</p>}
@@ -134,7 +139,7 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
                         placeholder=" " 
                         required
                         autoComplete="new-password"
-                        value={formData.password}
+                        value={formData.password || ""}
                         onChange={handleChange} />
                     <label htmlFor="password" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-violet-600 peer-focus:dark:text-violet-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
                     {errors.password && <p className="animate-pulse text-red-500 tracking-wider text-sm uppercase">{errors.password}</p>}
