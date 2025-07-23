@@ -1,9 +1,10 @@
-import { ConflictException, Injectable, UnauthorizedException } from "@nestjs/common";
+import { ConflictException, Injectable, InternalServerErrorException, UnauthorizedException } from "@nestjs/common";
 import { RegisterDTO } from "./dto/register.dto";
 import { LoginDTO } from "./dto/login.dto";
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from "src/prisma/prisma.service";
 import { JwtService } from "@nestjs/jwt";
+import { access } from "fs";
 
 
 @Injectable()
@@ -11,23 +12,46 @@ export class AuthService {
     constructor(private prisma: PrismaService, private jwt: JwtService) {}
 
     async register(dto: RegisterDTO) {
-        const exsisting = await this.prisma.user.findUnique({where: {email: dto.email} });
-        if (exsisting) throw new ConflictException('Email already in use!');
+        try {
+            const existing = await this.prisma.user.findUnique({
+            where: { email: dto.email },
+            });
+            if (existing) throw new ConflictException('Email already in use!');
 
-        if (dto.password !== dto.password_confirmation) {
-            throw new ConflictException('Passwords do not match!')
-        }
+            if (dto.password !== dto.password_confirmation) {
+            throw new ConflictException('Passwords do not match!');
+            }
 
-        const hashed = await bcrypt.hash(dto.password, 10)
-        const user = await this.prisma.user.create({
+            const hashed = await bcrypt.hash(dto.password, 10);
+
+            const dummyUser = {
+                id: -1,
+                email: dto.email
+            }
+            const payload = {sub: dummyUser.id, email: dummyUser.email}
+            const token = this.jwt.sign(payload)
+
+            const user = await this.prisma.user.create({
             data: {
                 email: dto.email,
                 name: dto.name,
-                password: dto.password
-            }
-        })
+                password: hashed,
+            },
+            });
 
-        return this._returnUserWithToken(user);
+            return {
+                token: this.jwt.sign({ sub: user.id, email: user.email }),
+                user: {
+                    id: user.id,
+                    email: user.email,
+                    name: user.name,
+                },
+            };
+
+        } catch (error) {
+            console.error('[REGISTER ERROR]', error);
+            throw new InternalServerErrorException('Something went wrong');
+        }
     }
 
     async login(dto: LoginDTO) {
@@ -42,20 +66,8 @@ export class AuthService {
             data: {lastLogin: new Date()}
         })
 
-        return this._returnUserWithToken(user);
-    }
-
-    private _returnUserWithToken(user: any) {
-        const payload = {sub: user.id, email: user.email}
-        const token = this.jwt.sign(payload)
-
         return {
-            token,
-            user: {
-                id: user.id,
-                email: user.id,
-                name: user.name
-            }
-        }
+            accessToken: this.jwt.sign({userId: user.id})
+        };
     }
 }
