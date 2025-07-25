@@ -75,7 +75,8 @@ const Profile: React.FC<ProfileProps> = ({ userId }) => {
                     /*Контент профиля*/
                     <div
                     className="flex flex-col items-center -mt-20 z-20 gap-1 relative transform hover:rotate-x-15 hover:rotate-y-30 transition-transform duration-300">
-                        <Image src={user?.image_path as string} alt="profile_avatar" width={100} height={100} className='w-40 h-40 border-2 border-neutral-100 shadow-lg shadow-neutral-100/50 rounded-full object-cover'/>
+                        <Image src={user?.image_path || '/default.png'} 
+                        alt="profile_avatar" width={100} height={100} className='w-40 h-40 border-2 border-neutral-100 shadow-lg shadow-neutral-100/50 rounded-full object-cover'/>
                         <div className="flex items-center space-x-2 my-3">
                             <p className="text-2xl">{user?.name}</p>
                             <span className="bg-blue-500 rounded-full p-1" title="Verified">

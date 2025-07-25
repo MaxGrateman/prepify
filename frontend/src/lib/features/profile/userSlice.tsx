@@ -14,7 +14,6 @@ export interface UserProfile {
     image_path: string;
     level: string | null;
     name: string;
-    place_of_work: string | null;
     stack: string | null;
 }
 
@@ -39,6 +38,10 @@ export const fetchUserData = createAsyncThunk('user/fetchUserData', async (_, {r
         })
         return response.data.user;
     } catch (error) {
+        console.error('[fetchUserData]', error);
+        if (axios.isAxiosError(error)) {
+            return rejectWithValue(error.response?.data?.message ?? 'Server error');
+        }
         return rejectWithValue('Failed to fetch the user')
     }
 });

@@ -10,6 +10,7 @@ import {fetchUserData} from "@/lib/features/profile/userSlice";
 import {AppDispatch} from "@/lib/store";
 import {GetServerSideProps} from "next";
 import validateForm from '@/utilities/components/validateForm';
+import axios from 'axios';
 
 interface FormData {
     name: string;
@@ -67,7 +68,7 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
             await AuthUser(router, apiUrl, {
                 email: formData.email,
                 password: formData.password,
-                ...(isRegister && { name: formData.name, passwordConfirmation: formData.password_confirmation }),
+                ...(isRegister && { name: formData.name, password_confirmation: formData.password_confirmation }),
             });
     
             setSuccess(isRegister ? 'Registration successful!' : 'Login Successful');
@@ -80,14 +81,19 @@ function AuthForm({ isRegister = false, apiUrl }: AuthFormProps) {
             if (!userResponse || !userResponse.id) {
                 throw new Error("User ID is missing.");
             }
-    
+            
+            console.log("Full user response:", userResponse);
             // Переход на профиль
             setTimeout(() => {
                 router.push(`/profile/${userResponse.id}`);
             }, 100);
     
         } catch (error: any) {
+            console.error("[AuthUser ERROR]", error)
             console.error("Error during submission:", error);
+            if (axios.isAxiosError(error)) {
+                throw new Error(error.response?.data?.message || 'Undefined error');
+            }
             setErrors(error.message || "Something went wrong.");
             setSuccess(null);
         }
