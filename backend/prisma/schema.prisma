@@ -20,4 +20,21 @@ model User {
   password String
   createdAt DateTime @default(now())
   lastLogin DateTime?
+
+  profile Profile?
+}
+
+model Profile {
+  id Int @id @default(autoincrement())
+  name String?
+  age Int?
+  country String?
+  email_verified_at String?
+  image_path String?
+  level String?
+  about String?
+  stack String?
+
+  userId Int @unique
+  user User @relation(fields: [userId], references: [id])
 }

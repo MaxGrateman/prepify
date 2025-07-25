@@ -36,6 +36,9 @@ export class AuthService {
                 email: dto.email,
                 name: dto.name,
                 password: hashed,
+                profile: {
+                    create: {},
+                }
             },
             });
 
