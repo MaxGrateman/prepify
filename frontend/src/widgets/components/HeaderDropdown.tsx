@@ -44,7 +44,7 @@ export default function HeaderDropdown({user_image, userId, children, userEmail,
             id="dropdownUserAvatarButton"
             onClick={toggleDropdown}
             aria-expanded={isOpen ? "true" : "false"}
-            className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+            className="flex text-sm bg-gray-800 rounded-full focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500"
             type="button"
         >
             <Image className="rounded-full object-fill w-10 h-10" width={39} height={39} src={user_image} alt="user photo" />

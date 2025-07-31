@@ -2,6 +2,7 @@ import {createAsyncThunk, createSlice, isRejectedWithValue, PayloadAction} from 
 import Cookies from "js-cookie";
 import {apiProfile, apiProfileUpdate} from "@/features/profile/api/apiUrlProfile";
 import axios from "axios";
+import { uploadImage } from "./uploadImage";
 
 
 export interface UserProfile {
@@ -21,6 +22,11 @@ interface UserState {
     user: UserProfile | null;
     loading: boolean;
     error: string | null;
+}
+
+interface SaveProfileArgs {
+    data: Partial<UserProfile>,
+    file?: File;
 }
 
 const initialState: UserState = {
@@ -46,24 +52,31 @@ export const fetchUserData = createAsyncThunk('user/fetchUserData', async (_, {r
     }
 });
 
-export const saveUserProfile = createAsyncThunk('user/saveUserProfile', async (updatedData: Partial<UserProfile>, {rejectWithValue}) => {
+export const saveUserProfile = createAsyncThunk(
+  'user/saveUserProfile',
+  async ({ data, file }: SaveProfileArgs, { rejectWithValue }) => {
     try {
-        const token = Cookies.get('token')
-        if (!token) throw new Error('No token found')
+      const token = Cookies.get('token');
+      if (!token) throw new Error('No token');
 
-        const response = await axios.put(apiProfileUpdate, updatedData, {
-            headers: {Authorization: `Bearer ${token}`}
-        })
+      if (file) {
+        const uploadedUrl = await uploadImage(file);
+        data.image_path = uploadedUrl;
+      }
 
-        return response.data.user
-    } catch(error) {
-        console.log('[saveUserProfile]', error)
-        if (axios.isAxiosError(error)) {
-            return rejectWithValue(error.response?.data?.message ?? 'Server error')
-        }
-        return rejectWithValue('Failed to update profile')
+      console.log('Sending profile data:', data);
+
+      const response = await axios.put(apiProfileUpdate, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      return response.data.user;
+    } catch (error) {
+      console.error('[saveUserProfile]', error);
+      return rejectWithValue('Failed to update profile');
     }
-});
+  }
+);
 
 const userSlice = createSlice({
     name: 'user',
