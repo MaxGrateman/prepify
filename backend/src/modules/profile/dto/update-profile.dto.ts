@@ -19,7 +19,7 @@ export class UpdatedProfileDto {
     email_verified_at?: string;
     
     @IsOptional()
-    @IsUrl({ require_protocol: false }, { message: 'Invalid image path' })
+    @IsString()
     image_path?: string;
     
     @IsOptional()
