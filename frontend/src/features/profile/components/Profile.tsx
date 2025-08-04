@@ -20,6 +20,7 @@ const Profile: React.FC<ProfileProps> = ({ userId }) => {
     const router = useRouter();
     // Стэйты для изминений данных в профиле
     const [isEditing, setIsEditing] = useState(false)
+    const [ignoreUserEffect, setIgnorUserEffect] = useState(false)
     const [formData, setFormData] = useState({
         name: '',
         about: '',
@@ -40,8 +41,9 @@ const Profile: React.FC<ProfileProps> = ({ userId }) => {
         }
     }, [dispatch, userId]);
 
+    // Сохранение даты в хук для отправки
     useEffect(() => {
-        if (user) {
+        if (user && !ignoreUserEffect) {
             setFormData({
             name: user.name ?? '',
             about: user.about ?? '',
@@ -53,7 +55,7 @@ const Profile: React.FC<ProfileProps> = ({ userId }) => {
             email_verified_at: user.email_verified_at ?? ''
             });
         }
-    }, [user]);
+    }, [user, ignoreUserEffect]);
 
     if (error) {
         return <div>{error}</div>;
@@ -64,8 +66,11 @@ const Profile: React.FC<ProfileProps> = ({ userId }) => {
         if (file) setSelectedFile(file)
     }
 
-    const handleSave = () => {
-        dispatch(saveUserProfile({data: formData, file: selectedFile}))
+    const handleSave = async () => {
+        setIgnorUserEffect(true)
+        await dispatch(saveUserProfile({data: formData, file: selectedFile}))
+        setSelectedFile(undefined)
+        setIsEditing(false)
     }
 
     return(
@@ -108,13 +113,13 @@ const Profile: React.FC<ProfileProps> = ({ userId }) => {
 
                 /*Контент профиля*/
                 <div className="flex flex-col items-center -mt-20 z-20 gap-1 relative transform hover:rotate-x-15 hover:rotate-y-30 transition-transform duration-500">
-                    <label className="relative w-40 h-40 cursor-pointer group rounded-full">
+                    <label className={`relative w-40 h-40 group rounded-full cursor-pointer ${!isEditing ? 'pointer-events-none' : ''}`}>
                         <Image
-                            src={user?.image_path || '/default.png'}
+                            src={formData.image_path || '/default.png'}
                             alt="profile_avatar"
                             width={160}
                             height={160}
-                            className="w-full h-full object-cover rounded-full border-2 border-neutral-100 shadow-neutral-100/50 shadow-lg"
+                            className="w-full h-full object-cover rounded-full bg-white border-2 border-neutral-100 shadow-neutral-100/50 shadow-lg"
                         />
                     
                         <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-sm font-bold tracking-wider">

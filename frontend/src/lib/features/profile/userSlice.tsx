@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import {apiProfile, apiProfileUpdate} from "@/features/profile/api/apiUrlProfile";
 import axios from "axios";
 import { uploadImage } from "./uploadImage";
+import { RootState } from '@/lib/store'
 
 
 export interface UserProfile {
@@ -52,9 +53,13 @@ export const fetchUserData = createAsyncThunk('user/fetchUserData', async (_, {r
     }
 });
 
-export const saveUserProfile = createAsyncThunk(
+export const saveUserProfile = createAsyncThunk<
+  UserProfile,
+  SaveProfileArgs,
+  { state: RootState }
+>(
   'user/saveUserProfile',
-  async ({ data, file }: SaveProfileArgs, { rejectWithValue }) => {
+  async ({ data, file }: SaveProfileArgs, { rejectWithValue, getState }) => {
     try {
       const token = Cookies.get('token');
       if (!token) throw new Error('No token');
